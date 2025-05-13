@@ -1,5 +1,5 @@
 "use client"
-import HeroSection from '@/components/sections/hero'; // Tambahkan baris ini
+import HeroSection from '@/components/sections/hero'; // Pastikan path ini benar
 
 export default function Home() {
   return (

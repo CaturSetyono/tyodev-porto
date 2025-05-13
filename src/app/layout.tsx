@@ -1,32 +1,27 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css'; // Impor file CSS global Anda
-import Header from '@/components/sections/header'; // Impor komponen Header Anda
+import './globals.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Navbar from '@/components/Navbar'; // Impor Navbar
 
-// Inisialisasi font Inter dari Google Fonts
 const inter = Inter({ subsets: ['latin'] });
 
-// Metadata untuk SEO dan informasi halaman
 export const metadata: Metadata = {
-  title: 'Portofolio Saya', // Ganti dengan judul portofolio Anda
-  description: 'Website portofolio pribadi dibuat dengan Next.js', // Ganti dengan deskripsi singkat
+  title: 'Portofolio Saya',
+  description: 'Website portofolio pribadi dibuat dengan Next.js',
 };
 
-// Komponen RootLayout utama
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id"> {/* Mengatur bahasa utama halaman ke Bahasa Indonesia */}
-      <body className={inter.className}>
-        {<Header />}
-        {children} {/* 'children' akan merender konten halaman aktif */}
-        {/* 
-          Contoh:
-          <Footer />
-        */}
+    <html lang="id">
+      <body className={`${inter.className} bg-gray-50 dark:bg-gray-900`}> {/* Tambahkan warna latar default */}
+        <Navbar /> {/* Tambahkan Navbar di sini */}
+        <main>{children}</main>
+        {/* Anda bisa menambahkan Footer di sini jika ada */}
       </body>
     </html>
   );

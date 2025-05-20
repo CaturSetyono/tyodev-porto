@@ -2,8 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navbar from '@/components/Navbar'; // Impor Navbar
-
+import Navbar from '@/components/Navbar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -19,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className={`${inter.className} bg-gray-50 dark:bg-gray-900`}> {/* Tambahkan warna latar default */}
-        <Navbar /> {/* Tambahkan Navbar di sini */}
+       <Navbar /> 
         <main>{children}</main>
         {/* Anda bisa menambahkan Footer di sini jika ada */}
       </body>

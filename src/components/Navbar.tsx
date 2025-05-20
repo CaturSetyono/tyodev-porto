@@ -1,50 +1,23 @@
-'use client';
-
-import Link from 'next/link';
-import { Navbar as BootstrapNavbar, Nav, Container } from 'react-bootstrap';
-import { useEffect, useRef } from 'react';
-import { gsap } from 'gsap';
-
-const Navbar = () => {
-  const navbarRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (navbarRef.current) {
-      gsap.fromTo(
-        navbarRef.current,
-        { y: -100, opacity: 0 },
-        { y: 0, opacity: 1, duration: 1, ease: 'power3.out', delay: 0.5 }
-      );
-    }
-  }, []);
-
+export default function Navbar() {
   return (
-    <BootstrapNavbar 
-      ref={navbarRef} 
-      bg="light" 
-      expand="lg" 
-      sticky="top" 
-      className="shadow-sm dark:bg-gray-800"
-    >
-      <Container>
-        <Link href="/" passHref legacyBehavior>
-          <BootstrapNavbar.Brand className="font-bold text-xl text-blue-600 dark:text-blue-400">
-            Nama Anda
-          </BootstrapNavbar.Brand>
-        </Link>
-        <BootstrapNavbar.Toggle aria-controls="basic-navbar-nav" />
-        <BootstrapNavbar.Collapse id="basic-navbar-nav">
-          <Nav className="ms-auto">
-            <Link href="/" passHref legacyBehavior><Nav.Link className="dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400">Beranda</Nav.Link></Link>
-            <Link href="/about" passHref legacyBehavior><Nav.Link className="dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400">Tentang Saya</Nav.Link></Link>
-            <Link href="/skills" passHref legacyBehavior><Nav.Link className="dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400">Keahlian</Nav.Link></Link>
-            <Link href="/portfolio" passHref legacyBehavior><Nav.Link className="dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400">Portofolio</Nav.Link></Link>
-            <Link href="/contact" passHref legacyBehavior><Nav.Link className="dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400">Kontak</Nav.Link></Link>
-          </Nav>
-        </BootstrapNavbar.Collapse>
-      </Container>
-    </BootstrapNavbar>
+    <nav className="bg-white dark:bg-gray-800 shadow">
+      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+        <div className="relative flex items-center justify-between h-16">
+          <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+            {/* Mobile menu button*/}
+          </div>
+          <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
+            <div className="hidden sm:block">
+              <div className="flex space-x-4">
+                <a href="/." className="text-gray-900 dark:text-white">Home</a>
+                <a href="/about" className="text-gray-900 dark:text-white">About</a>
+                <a href="/portfolio" className="text-gray-900 dark:text-white">Portfolio</a>
+                <a href="/contact" className="text-gray-900 dark:text-white">Contact</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
   );
-};
-
-export default Navbar;
+}

@@ -1,8 +1,5 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import './globals.css';
-import AppSidebar from '@/components/app-sidebar';
-import Footer from '@/components/Footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -18,9 +15,7 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className={`${inter.className} bg-gray-50 dark:bg-gray-900`}> {/* Tambahkan warna latar default */}
-        <AppSidebar />
-        <main>{children}</main>
-        <Footer />
+        {children}
       </body>
     </html>
   );

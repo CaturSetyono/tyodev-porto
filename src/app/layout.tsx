@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import AppSidebar from '@/components/app-sidebar';
 import Footer from '@/components/Footer';
 const inter = Inter({ subsets: ['latin'] });
@@ -18,10 +17,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id">
-      <body className={`${inter.className} bg-gray-50 dark:bg-gray-900`}> {/* Tambahkan warna latar default */}
+      <body className={`${inter.className} bg-gray-50 dark:bg-gray-900`}>
+        {/* Sidebar akan diposisikan secara fixed oleh class di dalamnya */}
         <AppSidebar />
-        <main>{children}</main>
-        <Footer />
+        
+        {/* Konten utama dengan margin kiri untuk desktop */}
+        <div className="flex flex-col flex-1 md:ml-64">
+          <main className="flex-grow">
+            {children}
+          </main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

@@ -1,31 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
+import { navLinks, socials } from "@/lib/config"; // <- Impor dari config
 
-const socials = [
-  {
-    name: "GitHub",
-    href: "https://github.com/yourusername",
-    icon: "/github.svg", // Add this icon to your public folder
-  },
-  {
-    name: "LinkedIn",
-    href: "https://linkedin.com/in/yourusername",
-    icon: "/linkedin.svg", // Add this icon to your public folder
-  },
-  {
-    name: "Twitter",
-    href: "https://twitter.com/yourusername",
-    icon: "/twitter.svg", // Add this icon to your public folder
-  },
-];
-
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "About", href: "/about" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Skills", href: "/skills" },
-  { name: "Contact", href: "/contact" },
-];
+// Hapus definisi navLinks dan socials yang lama dari sini
 
 export default function Footer() {
   return (

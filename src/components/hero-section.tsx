@@ -1,29 +1,29 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react"
-import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button";
+import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
+import { useState, useEffect } from "react";
 
 export default function HeroSection() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [mounted, setMounted] = useState(false)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
+    setMounted(true);
 
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
         x: (e.clientX / window.innerWidth) * 100,
         y: (e.clientY / window.innerHeight) * 100,
-      })
-    }
+      });
+    };
 
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [])
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
 
   if (!mounted) {
-    return <div className="min-h-screen bg-slate-900" />
+    return <div className="min-h-screen bg-slate-900" />;
   }
 
   return (
@@ -34,7 +34,9 @@ export default function HeroSection() {
         <div
           className="absolute w-64 h-64 bg-cyan-500/30 rounded-full blur-xl transition-transform duration-1000 ease-out"
           style={{
-            transform: `translate(${mousePosition.x * 0.5}px, ${mousePosition.y * 0.3}px)`,
+            transform: `translate(${mousePosition.x * 0.5}px, ${
+              mousePosition.y * 0.3
+            }px)`,
             top: "10%",
             left: "10%",
           }}
@@ -42,7 +44,9 @@ export default function HeroSection() {
         <div
           className="absolute w-96 h-96 bg-indigo-500/20 rounded-full blur-2xl transition-transform duration-1000 ease-out"
           style={{
-            transform: `translate(${mousePosition.x * -0.3}px, ${mousePosition.y * -0.2}px)`,
+            transform: `translate(${mousePosition.x * -0.3}px, ${
+              mousePosition.y * -0.2
+            }px)`,
             top: "50%",
             right: "10%",
           }}
@@ -50,7 +54,9 @@ export default function HeroSection() {
         <div
           className="absolute w-48 h-48 bg-teal-500/25 rounded-full blur-lg transition-transform duration-1000 ease-out"
           style={{
-            transform: `translate(${mousePosition.x * 0.4}px, ${mousePosition.y * 0.5}px)`,
+            transform: `translate(${mousePosition.x * 0.4}px, ${
+              mousePosition.y * 0.5
+            }px)`,
             bottom: "20%",
             left: "30%",
           }}
@@ -66,7 +72,7 @@ export default function HeroSection() {
             }}
           />
         </div>
-        
+
         {/* Light Rays Effect */}
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-0 left-1/4 w-1/2 h-[70vh] bg-gradient-to-b from-cyan-400/30 via-transparent to-transparent blur-3xl transform -rotate-12"></div>
@@ -81,7 +87,9 @@ export default function HeroSection() {
             {/* Status Badge */}
             <div className="inline-flex items-center px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 shadow-xl shadow-cyan-900/10">
               <div className="w-2 h-2 bg-teal-400 rounded-full mr-3 animate-pulse" />
-              <span className="text-white/80 text-sm font-medium">Available for work</span>
+              <span className="text-white/80 text-sm font-medium">
+                Available for work
+              </span>
             </div>
 
             {/* Main Heading */}
@@ -98,24 +106,37 @@ export default function HeroSection() {
               </div>
 
               <p className="text-lg md:text-xl text-white/70 max-w-lg leading-relaxed">
-                Saya menciptakan pengalaman digital yang memukau dengan menggabungkan{" "}
-                <span className="text-cyan-300 font-semibold">desain inovatif</span> dan{" "}
-                <span className="text-teal-300 font-semibold">teknologi terdepan</span>.
+                Saya menciptakan pengalaman digital yang memukau dengan
+                menggabungkan{" "}
+                <span className="text-cyan-300 font-semibold">
+                  desain inovatif
+                </span>{" "}
+                dan{" "}
+                <span className="text-teal-300 font-semibold">
+                  teknologi terdepan
+                </span>
+                .
               </p>
             </div>
 
             {/* Stats */}
             <div className="flex gap-8">
               <div className="text-center bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/10 shadow-lg">
-                <div className="text-2xl md:text-3xl font-bold text-cyan-300">50+</div>
+                <div className="text-2xl md:text-3xl font-bold text-cyan-300">
+                  50+
+                </div>
                 <div className="text-white/70 text-sm">Projects</div>
               </div>
               <div className="text-center bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/10 shadow-lg">
-                <div className="text-2xl md:text-3xl font-bold text-indigo-300">3+</div>
+                <div className="text-2xl md:text-3xl font-bold text-indigo-300">
+                  3+
+                </div>
                 <div className="text-white/70 text-sm">Years Exp</div>
               </div>
               <div className="text-center bg-white/5 backdrop-blur-sm rounded-xl px-4 py-3 border border-white/10 shadow-lg">
-                <div className="text-2xl md:text-3xl font-bold text-teal-300">100%</div>
+                <div className="text-2xl md:text-3xl font-bold text-teal-300">
+                  100%
+                </div>
                 <div className="text-white/70 text-sm">Satisfaction</div>
               </div>
             </div>
@@ -199,7 +220,9 @@ export default function HeroSection() {
                 className="absolute -bottom-3 -left-3 bg-teal-500/20 backdrop-blur-sm rounded-lg px-3 py-1 border border-teal-400/30 animate-bounce shadow-lg"
                 style={{ animationDelay: "1s" }}
               >
-                <span className="text-white text-xs font-medium">TypeScript</span>
+                <span className="text-white text-xs font-medium">
+                  TypeScript
+                </span>
               </div>
               <div
                 className="absolute -bottom-3 -right-3 bg-blue-500/20 backdrop-blur-sm rounded-lg px-3 py-1 border border-blue-400/30 animate-bounce shadow-lg"
@@ -216,13 +239,22 @@ export default function HeroSection() {
             />
             <div
               className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 border border-indigo-500/15 rounded-full -z-10 animate-spin"
-              style={{ animationDuration: "30s", animationDirection: "reverse" }}
+              style={{
+                animationDuration: "30s",
+                animationDirection: "reverse",
+              }}
             />
-            
+
             {/* Additional glowing orbs */}
             <div className="absolute top-[20%] right-[30%] w-4 h-4 bg-cyan-400 rounded-full blur-sm animate-pulse"></div>
-            <div className="absolute top-[60%] left-[25%] w-3 h-3 bg-indigo-400 rounded-full blur-sm animate-pulse" style={{ animationDelay: "0.7s" }}></div>
-            <div className="absolute bottom-[25%] right-[35%] w-5 h-5 bg-teal-400 rounded-full blur-sm animate-pulse" style={{ animationDelay: "1.3s" }}></div>
+            <div
+              className="absolute top-[60%] left-[25%] w-3 h-3 bg-indigo-400 rounded-full blur-sm animate-pulse"
+              style={{ animationDelay: "0.7s" }}
+            ></div>
+            <div
+              className="absolute bottom-[25%] right-[35%] w-5 h-5 bg-teal-400 rounded-full blur-sm animate-pulse"
+              style={{ animationDelay: "1.3s" }}
+            ></div>
           </div>
         </div>
       </div>
@@ -230,12 +262,14 @@ export default function HeroSection() {
       {/* Scroll Indicator */}
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60">
         <div className="flex flex-col items-center gap-2">
-          <span className="text-sm font-medium text-cyan-300/80">Scroll untuk melihat lebih</span>
+          <span className="text-sm font-medium text-cyan-300/80">
+            Scroll untuk melihat lebih
+          </span>
           <div className="w-6 h-10 border-2 border-cyan-400/30 rounded-full flex justify-center">
             <div className="w-1 h-3 bg-cyan-400/70 rounded-full mt-2 animate-bounce" />
           </div>
         </div>
       </div>
     </section>
-  )
+  );
 }

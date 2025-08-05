@@ -46,7 +46,7 @@ export default function SkillsSection() {
   };
 
   return (
-    <section className="py-20 bg-slate-800 relative overflow-hidden">
+    <section className="py-20 bg-indigo-950 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.3)_1px,transparent_0)] bg-[length:40px_40px]" />
@@ -55,14 +55,12 @@ export default function SkillsSection() {
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-2 bg-purple-500/20 rounded-full border border-purple-500/30 mb-6">
-            <span className="text-purple-300 text-sm font-medium">
-              My Skills
-            </span>
+          <div className="inline-block px-4 py-2 bg-cyan-500/20 rounded-full border border-cyan-500/30 mb-6">
+            <span className="text-cyan-300 text-sm font-medium">My Skills</span>
           </div>
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Technologies I{" "}
-            <span className="bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-teal-400 bg-clip-text text-transparent">
               Master
             </span>
           </h2>
@@ -81,7 +79,7 @@ export default function SkillsSection() {
                 onClick={() => setActiveCategory(key)}
                 className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
                   activeCategory === key
-                    ? "bg-gradient-to-r from-purple-600 to-pink-600 text-white shadow-lg"
+                    ? "bg-gradient-to-r from-cyan-600 to-indigo-600 text-white shadow-lg"
                     : "text-white/70 hover:text-white hover:bg-white/5"
                 }`}
               >
@@ -114,7 +112,7 @@ export default function SkillsSection() {
                   className={`absolute top-0 left-0 h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-1000 ease-out group-hover:shadow-lg`}
                   style={{
                     width: `${skill.level}%`,
-                    boxShadow: `0 0 20px rgba(147, 51, 234, 0.3)`,
+                    boxShadow: `0 0 20px rgba(6, 182, 212, 0.3)`,
                   }}
                 />
               </div>
@@ -130,7 +128,7 @@ export default function SkillsSection() {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10 max-w-2xl mx-auto">
+          <div className="bg-gradient-to-r from-cyan-500/10 to-indigo-500/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10 max-w-2xl mx-auto shadow-lg">
             <h3 className="text-2xl font-bold text-white mb-4">
               Tertarik untuk berkolaborasi?
             </h3>
@@ -138,7 +136,9 @@ export default function SkillsSection() {
               Mari diskusikan project Anda dan bagaimana saya bisa membantu
               mewujudkannya
             </p>
-            <button className="bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-8 py-3 rounded-xl font-medium transition-all duration-300 hover:shadow-lg hover:scale-105">Make it Happen</button>
+            <button className="bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-700 hover:to-indigo-700 text-white px-8 py-3 rounded-xl font-medium transition-all duration-300 hover:shadow-lg hover:scale-105">
+              Make it Happen
+            </button>
           </div>
         </div>
       </div>

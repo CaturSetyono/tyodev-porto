@@ -27,7 +27,7 @@ export default function HeroSection() {
   }
 
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-cyan-950 via-indigo-900 to-violet-950 overflow-hidden">
+    <section id="home" className="relative min-h-screen bg-gradient-to-br from-cyan-950 via-indigo-900 to-violet-950 overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0">
         {/* Floating Shapes */}
@@ -80,7 +80,7 @@ export default function HeroSection() {
         </div>
       </div>
 
-      <div className="relative z-10 container mx-auto px-4 py-20">
+      <div className="relative z-10 container mx-auto px-4 py-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center min-h-screen">
           {/* Left Content */}
           <div className="space-y-8">
@@ -255,18 +255,6 @@ export default function HeroSection() {
               className="absolute bottom-[25%] right-[35%] w-5 h-5 bg-teal-400 rounded-full blur-sm animate-pulse"
               style={{ animationDelay: "1.3s" }}
             ></div>
-          </div>
-        </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white/60">
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-sm font-medium text-cyan-300/80">
-            Scroll untuk melihat lebih
-          </span>
-          <div className="w-6 h-10 border-2 border-cyan-400/30 rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-cyan-400/70 rounded-full mt-2 animate-bounce" />
           </div>
         </div>
       </div>

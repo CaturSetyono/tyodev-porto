@@ -34,7 +34,7 @@ export default function AboutSection() {
   ];
 
   return (
-    <section className="py-20 bg-gradient-to-b from-violet-950 to-cyan-950 relative overflow-hidden">
+    <section id="about" className="py-20 bg-gradient-to-b from-violet-950 to-cyan-950 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl" />

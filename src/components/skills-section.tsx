@@ -46,7 +46,7 @@ export default function SkillsSection() {
   };
 
   return (
-    <section className="py-20 bg-indigo-950 relative overflow-hidden">
+    <section id="skills" className="py-20 bg-indigo-950 relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.3)_1px,transparent_0)] bg-[length:40px_40px]" />

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import Navbar from '@/components/navbar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -14,8 +15,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id">
+    <html lang="id" className="scroll-smooth">
       <body className={`${inter.className} bg-gray-50 dark:bg-gray-900`}>
+          <Navbar />
           <main className="flex-grow">
             {children}
           </main>

@@ -1,12 +1,14 @@
-"use client"
+"use client";
 
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { useState, useEffect } from "react";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,63 +35,149 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const navItems = ["Home", "About", "Skills", "Projects"];
+
   return (
-    <div
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "py-4 bg-black/50" : "py-6"
+        scrolled ? "py-3" : "py-5"
       }`}
     >
-      <nav
-        className={`max-w-6xl mx-auto px-6 transition-all duration-300 ${
-          scrolled ? "py-2" : "py-3"
-        }`}
-      >
-        <div className="relative">
-          <div
-            className={`absolute inset-0 rounded-full transition-all duration-300 ${
-              scrolled
-                ? "bg-black/30 backdrop-blur-md border border-white/10"
-                : "bg-white/5 backdrop-blur-sm"
-            }`}
-          ></div>
-          <ul className="relative flex items-center justify-center gap-8">
-            {["Home", "About", "Skills", "Projects"].map((item) => (
-              <li key={item}>
+      <nav className="max-w-6xl mx-auto px-6">
+        <div
+          className={`flex items-center justify-between rounded-2xl px-6 py-3 transition-all duration-300 border border-white/10 shadow-lg ${
+            scrolled
+              ? "bg-black/40 backdrop-blur-lg"
+              : "bg-white/5 backdrop-blur-md"
+          }`}
+        >
+          {/* Logo */}
+          <Link href="#home" className="text-xl font-bold text-white tracking-wide">
+            MyPortfolio
+          </Link>
+
+          {/* Desktop Menu */}
+          <ul className="hidden md:flex items-center gap-8 relative">
+            {navItems.map((item) => (
+              <li key={item} className="relative">
                 <Link
                   href={`#${item.toLowerCase()}`}
                   className={`text-sm font-medium transition-all duration-300 ${
                     activeSection === item.toLowerCase()
-                      ? "text-white scale-105"
-                      : "text-white/60 hover:text-white/90"
+                      ? "text-white"
+                      : "text-white/60 hover:text-white"
                   }`}
                 >
                   {item}
-                  {activeSection === item.toLowerCase() && (
-                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-white/30 rounded-full"></span>
-                  )}
                 </Link>
+                {activeSection === item.toLowerCase() && (
+                  <span className="absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-pink-500 to-purple-500 rounded-full animate-[slideIn_0.3s_ease]"></span>
+                )}
               </li>
             ))}
             <li>
               <Button
                 asChild
                 variant="ghost"
-                className={`relative overflow-hidden transition-all duration-300 ${
+                className={`relative overflow-hidden transition-all duration-300 rounded-full ${
                   activeSection === "contact"
-                    ? "bg-white/20 text-white"
+                    ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white"
                     : "text-white/80 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <Link href="#contact">
                   Contact
-                  <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/5 to-white/0 transform translate-x-[-100%] animate-shimmer"></span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] animate-shimmer"></span>
                 </Link>
               </Button>
             </li>
           </ul>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-white p-2 rounded-md hover:bg-white/10 transition"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {menuOpen && (
+          <div className="md:hidden mt-3 rounded-2xl bg-black/50 backdrop-blur-lg border border-white/10 shadow-lg p-4 animate-fadeIn">
+            <ul className="flex flex-col gap-4">
+              {navItems.map((item) => (
+                <li key={item}>
+                  <Link
+                    href={`#${item.toLowerCase()}`}
+                    className={`block text-sm font-medium transition-all duration-300 ${
+                      activeSection === item.toLowerCase()
+                        ? "text-white"
+                        : "text-white/70 hover:text-white"
+                    }`}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item}
+                  </Link>
+                </li>
+              ))}
+              <li>
+                <Button
+                  asChild
+                  variant="ghost"
+                  className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  <Link href="#contact">Contact</Link>
+                </Button>
+              </li>
+            </ul>
+          </div>
+        )}
       </nav>
-    </div>
+
+      {/* Animations */}
+      <style jsx>{`
+        @keyframes slideIn {
+          from {
+            transform: scaleX(0);
+          }
+          to {
+            transform: scaleX(1);
+          }
+        }
+        .animate-slideIn {
+          animation: slideIn 0.3s ease forwards;
+        }
+        @keyframes shimmer {
+          0% {
+            transform: translateX(-100%);
+          }
+          50% {
+            transform: translateX(100%);
+          }
+          100% {
+            transform: translateX(100%);
+          }
+        }
+        .animate-shimmer {
+          animation: shimmer 2s infinite;
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.3s ease-out;
+        }
+      `}</style>
+    </header>
   );
 };
 

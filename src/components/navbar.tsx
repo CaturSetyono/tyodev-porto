@@ -9,11 +9,24 @@ const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
       const sections = ["home", "about", "skills", "projects", "contact"];
       const scrollPosition = window.scrollY;
+
+      // Handle navbar visibility based on scroll direction
+      if (scrollPosition > lastScrollY && scrollPosition > 100) {
+        // Scrolling down and past 100px - hide navbar
+        setVisible(false);
+        setMenuOpen(false); // Close mobile menu when hiding navbar
+      } else if (scrollPosition < lastScrollY || scrollPosition <= 100) {
+        // Scrolling up or at top - show navbar
+        setVisible(true);
+      }
+      setLastScrollY(scrollPosition);
 
       sections.forEach((section) => {
         const element = document.getElementById(section);
@@ -33,17 +46,17 @@ const Navbar = () => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const navItems = ["Home", "About", "Skills", "Projects"];
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? "py-3" : "py-5"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 transform ${
+        visible ? "translate-y-0" : "-translate-y-full"
+      } ${scrolled ? "py-3" : "py-5"}`}
     >
-      <nav className="max-w-6xl mx-auto px-6">
+      <nav className="max-w-6xl mx-auto px-6 mt-2 md:mt-4">
         <div
           className={`flex items-center justify-between rounded-2xl px-6 py-3 transition-all duration-300 border border-white/10 shadow-lg ${
             scrolled
@@ -52,8 +65,11 @@ const Navbar = () => {
           }`}
         >
           {/* Logo */}
-          <Link href="#home" className="text-xl font-bold text-white tracking-wide">
-            MyPortfolio
+          <Link
+            href="#home"
+            className="text-xl font-bold text-white tracking-wide"
+          >
+            tyodev
           </Link>
 
           {/* Desktop Menu */}

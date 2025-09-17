@@ -17,11 +17,11 @@ export default function HeroSection() {
       id="home"
       className="relative min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900"
     >
-      <div className="container mx-auto px-6 py-20 grid lg:grid-cols-2 gap-12 items-center min-h-screen">
+      <div className="container mx-auto px-6 py-20 grid lg:grid-cols-2 gap-8 items-center min-h-screen md:p-20 md:pt-32">
         
         {/* Left Content */}
-        <div className="space-y-6">
-          <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
+        <div className="space-y-6 ">
+          <h1 className="text-xl md:text-3xl font-bold text-white leading-tight">
             Hi, I’m{" "}
             <span className="text-transparent bg-gradient-to-r from-cyan-400 to-indigo-400 bg-clip-text">
               Catur Setyono
@@ -73,7 +73,6 @@ export default function HeroSection() {
                 className="w-full h-full object-cover"
               />
             </div>
-
             {/* Name & Title */}
             <div className="text-center mt-6">
               <h3 className="text-2xl font-semibold text-white">Catur Setyono</h3>

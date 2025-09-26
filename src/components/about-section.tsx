@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { Code, Palette, Rocket, Users } from "lucide-react";
 
-export default function AboutSection() {
+const AboutSection = React.memo(function AboutSection() {
   const [activeCard, setActiveCard] = useState(0);
 
   const cards = [
@@ -168,4 +168,5 @@ export default function AboutSection() {
       </div>
     </section>
   );
-}
+});
+export default AboutSection;

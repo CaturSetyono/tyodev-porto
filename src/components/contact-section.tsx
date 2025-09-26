@@ -1,14 +1,17 @@
 import { Button } from "@/components/ui/button";
 import { Mail, Github, Linkedin, Send, User, Bot } from "lucide-react";
-import { useState } from "react";
+import React, { useState, useCallback } from "react";
 
-export default function ContactSection() {
+const ContactSection = React.memo(function ContactSection() {
   const [question, setQuestion] = useState("");
   const [messages, setMessages] = useState([
-    { from: "bot", text: "👋 Halo! Silakan tanyakan apa saja tentang saya atau portofolio ini." }
+    {
+      from: "bot",
+      text: "👋 Halo! Silakan tanyakan apa saja tentang saya atau portofolio ini.",
+    },
   ]);
 
-  const handleSend = () => {
+  const handleSend = useCallback(() => {
     if (!question.trim()) return;
 
     setMessages((prev) => [...prev, { from: "user", text: question }]);
@@ -16,12 +19,15 @@ export default function ContactSection() {
     setTimeout(() => {
       setMessages((prev) => [
         ...prev,
-        { from: "bot", text: "Terima kasih sudah bertanya! Saya akan segera menjawab pertanyaan Anda." }
+        {
+          from: "bot",
+          text: "Terima kasih sudah bertanya! Saya akan segera menjawab pertanyaan Anda.",
+        },
       ]);
     }, 600);
 
     setQuestion("");
-  };
+  }, [question]);
 
   return (
     <section
@@ -38,7 +44,9 @@ export default function ContactSection() {
         <div className="max-w-3xl mx-auto text-center">
           {/* Title */}
           <div className="inline-block px-4 py-2 bg-cyan-500/20 rounded-full border border-cyan-500/30 mb-6">
-            <span className="text-cyan-300 text-sm font-medium">Hubungi Saya</span>
+            <span className="text-cyan-300 text-sm font-medium">
+              Hubungi Saya
+            </span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-cyan-300 bg-clip-text text-transparent mb-6">
@@ -46,8 +54,8 @@ export default function ContactSection() {
           </h2>
 
           <p className="text-white/70 text-lg mb-10">
-            Punya proyek menarik atau ingin bekerja sama? Saya selalu terbuka untuk diskusi
-            dan kolaborasi pada proyek-proyek yang menantang.
+            Punya proyek menarik atau ingin bekerja sama? Saya selalu terbuka
+            untuk diskusi dan kolaborasi pada proyek-proyek yang menantang.
           </p>
 
           {/* Tombol Kontak */}
@@ -147,4 +155,5 @@ export default function ContactSection() {
       `}</style>
     </section>
   );
-}
+});
+export default ContactSection;

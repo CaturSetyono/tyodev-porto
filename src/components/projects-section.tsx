@@ -1,100 +1,108 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { ExternalLink, Github, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
-export default function ProjectsSection() {
+const ProjectsSection = React.memo(function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState("all");
 
-  const projects = [
-    {
-      id: 1,
-      title: "E-Commerce Platform",
-      description:
-        "Platform e-commerce modern dengan fitur lengkap, payment gateway, dan admin dashboard yang powerful.",
-      image: "/placeholder.svg?height=300&width=400",
-      category: "fullstack",
-      technologies: ["Next.js", "TypeScript", "Prisma", "Stripe"],
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: true,
-    },
-    {
-      id: 2,
-      title: "Task Management App",
-      description:
-        "Aplikasi manajemen tugas dengan real-time collaboration, drag & drop, dan notifikasi push.",
-      image: "/placeholder.svg?height=300&width=400",
-      category: "frontend",
-      technologies: ["React", "Socket.io", "Framer Motion", "Tailwind"],
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false,
-    },
-    {
-      id: 3,
-      title: "AI Content Generator",
-      description:
-        "Platform AI untuk generate konten marketing dengan berbagai template dan customization options.",
-      image: "/placeholder.svg?height=300&width=400",
-      category: "fullstack",
-      technologies: ["Next.js", "OpenAI API", "PostgreSQL", "Stripe"],
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: true,
-    },
-    {
-      id: 4,
-      title: "Portfolio Website",
-      description:
-        "Website portfolio interaktif dengan animasi smooth dan design yang unik untuk personal branding.",
-      image: "/placeholder.svg?height=300&width=400",
-      category: "frontend",
-      technologies: ["Next.js", "Framer Motion", "Tailwind", "GSAP"],
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false,
-    },
-    {
-      id: 5,
-      title: "Restaurant POS System",
-      description:
-        "Sistem Point of Sale untuk restoran dengan inventory management dan reporting analytics.",
-      image: "/placeholder.svg?height=300&width=400",
-      category: "fullstack",
-      technologies: ["React", "Node.js", "MongoDB", "Express"],
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false,
-    },
-    {
-      id: 6,
-      title: "Social Media Dashboard",
-      description:
-        "Dashboard analytics untuk social media dengan data visualization dan automated reporting.",
-      image: "/placeholder.svg?height=300&width=400",
-      category: "frontend",
-      technologies: ["Vue.js", "Chart.js", "Tailwind", "API Integration"],
-      liveUrl: "#",
-      githubUrl: "#",
-      featured: false,
-    },
-  ];
+  const projects = useMemo(
+    () => [
+      {
+        id: 1,
+        title: "E-Commerce Platform",
+        description:
+          "Platform e-commerce modern dengan fitur lengkap, payment gateway, dan admin dashboard yang powerful.",
+        image: "/placeholder.svg?height=300&width=400",
+        category: "fullstack",
+        technologies: ["Next.js", "TypeScript", "Prisma", "Stripe"],
+        liveUrl: "#",
+        githubUrl: "#",
+        featured: true,
+      },
+      {
+        id: 2,
+        title: "Task Management App",
+        description:
+          "Aplikasi manajemen tugas dengan real-time collaboration, drag & drop, dan notifikasi push.",
+        image: "/placeholder.svg?height=300&width=400",
+        category: "frontend",
+        technologies: ["React", "Socket.io", "Framer Motion", "Tailwind"],
+        liveUrl: "#",
+        githubUrl: "#",
+        featured: false,
+      },
+      {
+        id: 3,
+        title: "AI Content Generator",
+        description:
+          "Platform AI untuk generate konten marketing dengan berbagai template dan customization options.",
+        image: "/placeholder.svg?height=300&width=400",
+        category: "fullstack",
+        technologies: ["Next.js", "OpenAI API", "PostgreSQL", "Stripe"],
+        liveUrl: "#",
+        githubUrl: "#",
+        featured: true,
+      },
+      {
+        id: 4,
+        title: "Portfolio Website",
+        description:
+          "Website portfolio interaktif dengan animasi smooth dan design yang unik untuk personal branding.",
+        image: "/placeholder.svg?height=300&width=400",
+        category: "frontend",
+        technologies: ["Next.js", "Framer Motion", "Tailwind", "GSAP"],
+        liveUrl: "#",
+        githubUrl: "#",
+        featured: false,
+      },
+      {
+        id: 5,
+        title: "Restaurant POS System",
+        description:
+          "Sistem Point of Sale untuk restoran dengan inventory management dan reporting analytics.",
+        image: "/placeholder.svg?height=300&width=400",
+        category: "fullstack",
+        technologies: ["React", "Node.js", "MongoDB", "Express"],
+        liveUrl: "#",
+        githubUrl: "#",
+        featured: false,
+      },
+      {
+        id: 6,
+        title: "Social Media Dashboard",
+        description:
+          "Dashboard analytics untuk social media dengan data visualization dan automated reporting.",
+        image: "/placeholder.svg?height=300&width=400",
+        category: "frontend",
+        technologies: ["Vue.js", "Chart.js", "Tailwind", "API Integration"],
+        liveUrl: "#",
+        githubUrl: "#",
+        featured: false,
+      },
+    ],
+    []
+  );
 
-  const filters = [
-    { key: "all", label: "All Projects" },
-    { key: "featured", label: "Featured" },
-    { key: "fullstack", label: "Full Stack" },
-    { key: "frontend", label: "Frontend" },
-  ];
+  const filters = useMemo(
+    () => [
+      { key: "all", label: "All Projects" },
+      { key: "featured", label: "Featured" },
+      { key: "fullstack", label: "Full Stack" },
+      { key: "frontend", label: "Frontend" },
+    ],
+    []
+  );
 
-  const filteredProjects = projects.filter((project) => {
-    if (activeFilter === "all") return true;
-    if (activeFilter === "featured") return project.featured;
-    return project.category === activeFilter;
-  });
+  const filteredProjects = useMemo(() => {
+    return projects.filter((project) => {
+      if (activeFilter === "all") return true;
+      if (activeFilter === "featured") return project.featured;
+      return project.category === activeFilter;
+    });
+  }, [activeFilter, projects]);
 
   return (
     <section
@@ -152,13 +160,6 @@ export default function ProjectsSection() {
             >
               {/* Project Image */}
               <div className="relative overflow-hidden">
-                <Image
-                  src={project.image || "/placeholder.svg"}
-                  alt={project.title}
-                  width={400}
-                  height={192}
-                  className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
-                />
                 <Image
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
@@ -236,4 +237,5 @@ export default function ProjectsSection() {
       </div>
     </section>
   );
-}
+});
+export default ProjectsSection;

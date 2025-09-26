@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ExternalLink, Github, ArrowRight } from "lucide-react";
+import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
 export default function ProjectsSection() {
@@ -96,7 +97,10 @@ export default function ProjectsSection() {
   });
 
   return (
-    <section id="projects" className="py-20 bg-gradient-to-b from-cyan-950 to-indigo-950 relative overflow-hidden">
+    <section
+      id="projects"
+      className="py-20 bg-gradient-to-b from-cyan-950 to-indigo-950 relative overflow-hidden"
+    >
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />
@@ -148,9 +152,18 @@ export default function ProjectsSection() {
             >
               {/* Project Image */}
               <div className="relative overflow-hidden">
-                <img
+                <Image
                   src={project.image || "/placeholder.svg"}
                   alt={project.title}
+                  width={400}
+                  height={192}
+                  className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <Image
+                  src={project.image || "/placeholder.svg"}
+                  alt={project.title}
+                  width={400}
+                  height={192}
                   className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

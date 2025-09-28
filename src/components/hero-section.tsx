@@ -17,7 +17,7 @@ export default function HeroSection() {
       className="relative min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900"
     >
       <div className="container mx-auto px-6 py-16 max-w-6xl md:pt-32">
-        <div className="bg-slate-800/50 rounded-2xl shadow-2xl border border-slate-700/50 overflow-hidden backdrop-blur-sm">
+        <div className="bg-gray-900 rounded-2xl shadow-2xl border border-slate-700/50 overflow-hidden backdrop-blur-sm">
           <div className="grid md:grid-cols-2 gap-0">
             {/* Left Section - Content */}
             <div className="p-8 md:p-12 flex flex-col justify-center">
@@ -75,7 +75,7 @@ export default function HeroSection() {
             </div>
 
             {/* Right Section - Image/Visual */}
-            <div className="bg-slate-800/30 p-8 md:p-12 flex flex-col justify-center items-center">
+            <div className="bg-transparent p-8 md:p-12 flex flex-col justify-center items-center">
               <DotLottieReact
                 src="https://lottie.host/abe0c54f-4d9c-4aa3-985b-f88247119efa/6N5K7c47Cn.lottie"
                 loop

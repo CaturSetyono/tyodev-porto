@@ -5,8 +5,8 @@ import Navbar from '@/components/navbar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Portofolio Saya',
-  description: 'Website portofolio pribadi dibuat dengan Next.js',
+  title: 'Catur Setyono - Web Developer',
+  description: 'Website portofolio pribadi dibuat oleh Catur Setyono',
 };
 
 export default function RootLayout({

@@ -1,33 +1,87 @@
 import { Button } from "@/components/ui/button";
 import { Mail, Github, Linkedin, Send, User, Bot } from "lucide-react";
 import React, { useState, useCallback } from "react";
+import type {
+  ChatMessage,
+  AIProvider,
+  ChatResponse,
+  ChatError,
+} from "@/types/chat";
 
 const ContactSection = React.memo(function ContactSection() {
   const [question, setQuestion] = useState("");
-  const [messages, setMessages] = useState([
+  const [messages, setMessages] = useState<ChatMessage[]>([
     {
       from: "bot",
       text: "👋 Halo! Silakan tanyakan apa saja tentang saya atau portofolio ini.",
     },
   ]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [aiProvider, setAiProvider] = useState<AIProvider>("gemini");
 
-  const handleSend = useCallback(() => {
-    if (!question.trim()) return;
+  const handleSend = useCallback(async () => {
+    if (!question.trim() || isLoading) return;
 
-    setMessages((prev) => [...prev, { from: "user", text: question }]);
+    const userMessage: ChatMessage = { from: "user", text: question };
+    setMessages((prev) => [...prev, userMessage]);
+    setQuestion("");
+    setIsLoading(true);
 
-    setTimeout(() => {
+    try {
+      // Prepare messages for API call
+      const chatMessages = messages
+        .filter((msg) => msg.from !== "bot" || !msg.text.includes("👋 Halo!")) // Remove initial greeting
+        .map((msg) => ({
+          role:
+            msg.from === "user" ? ("user" as const) : ("assistant" as const),
+          content: msg.text,
+        }));
+
+      // Add current question
+      chatMessages.push({
+        role: "user" as const,
+        content: question,
+      });
+
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          messages: chatMessages,
+          provider: aiProvider,
+        }),
+      });
+
+      const data: ChatResponse | ChatError = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          "error" in data ? data.error : "Gagal mendapatkan respons"
+        );
+      }
+
       setMessages((prev) => [
         ...prev,
         {
           from: "bot",
-          text: "Terima kasih sudah bertanya! Saya akan segera menjawab pertanyaan Anda.",
+          text: (data as ChatResponse).message,
         },
       ]);
-    }, 600);
-
-    setQuestion("");
-  }, [question]);
+    } catch (error) {
+      console.error("Error:", error);
+      setMessages((prev) => [
+        ...prev,
+        {
+          from: "bot",
+          text: "Maaf, terjadi kesalahan. Silakan coba lagi dalam beberapa saat.",
+        },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  }, [question, messages, isLoading, aiProvider]);
 
   return (
     <section
@@ -84,6 +138,31 @@ const ContactSection = React.memo(function ContactSection() {
 
           {/* Chatbot */}
           <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-5 max-w-2xl mx-auto shadow-lg">
+            {/* AI Provider Selector */}
+            <div className="flex justify-center mb-4">
+              <div className="flex bg-white/10 rounded-lg p-1">
+                <button
+                  onClick={() => setAiProvider("gemini")}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                    aiProvider === "gemini"
+                      ? "bg-cyan-500/30 text-cyan-300 shadow-sm"
+                      : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  Gemini AI
+                </button>
+                <button
+                  onClick={() => setAiProvider("grok")}
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                    aiProvider === "grok"
+                      ? "bg-cyan-500/30 text-cyan-300 shadow-sm"
+                      : "text-white/70 hover:text-white"
+                  }`}
+                >
+                  Grok AI
+                </button>
+              </div>
+            </div>
             {/* Chat Messages */}
             <div className="h-64 overflow-y-auto space-y-4 mb-6 scrollbar-thin scrollbar-thumb-white/20">
               {messages.map((msg, idx) => (
@@ -114,6 +193,29 @@ const ContactSection = React.memo(function ContactSection() {
                   )}
                 </div>
               ))}
+              {isLoading && (
+                <div className="flex items-start gap-3 justify-start animate-fadeIn">
+                  <div className="flex-shrink-0 w-9 h-9 bg-cyan-500/20 border border-cyan-400/50 rounded-full flex items-center justify-center">
+                    <Bot size={18} className="text-cyan-300" />
+                  </div>
+                  <div className="px-5 py-3 rounded-xl bg-cyan-500/20 text-cyan-100 text-left">
+                    <div className="flex items-center gap-2">
+                      <div className="flex space-x-1">
+                        <div className="w-2 h-2 bg-cyan-300 rounded-full animate-bounce"></div>
+                        <div
+                          className="w-2 h-2 bg-cyan-300 rounded-full animate-bounce"
+                          style={{ animationDelay: "0.1s" }}
+                        ></div>
+                        <div
+                          className="w-2 h-2 bg-cyan-300 rounded-full animate-bounce"
+                          style={{ animationDelay: "0.2s" }}
+                        ></div>
+                      </div>
+                      <span className="text-sm">Sedang mengetik...</span>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Chat Input */}
@@ -128,9 +230,10 @@ const ContactSection = React.memo(function ContactSection() {
               />
               <Button
                 onClick={handleSend}
-                className="px-5 py-3 text-lg flex items-center gap-2 w-full sm:w-auto"
+                disabled={isLoading || !question.trim()}
+                className="px-5 py-3 text-lg flex items-center gap-2 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send size={20} /> Kirim
+                <Send size={20} /> {isLoading ? "Mengirim..." : "Kirim"}
               </Button>
             </div>
           </div>

@@ -5,7 +5,7 @@ Write-Host "=======================================" -ForegroundColor Green
 if (-not (Test-Path ".env.local")) {
     Write-Host "❌ Error: .env.local file not found!" -ForegroundColor Red
     Write-Host "Please create .env.local with your API keys:" -ForegroundColor Yellow
-    Write-Host "GROK_API_KEY=your-grok-api-key" -ForegroundColor Yellow
+    Write-Host "OPENAI_API_KEY=your-openai-api-key" -ForegroundColor Yellow
     Write-Host "GEMINI_API_KEY=your-gemini-api-key" -ForegroundColor Yellow
     exit 1
 }

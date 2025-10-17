@@ -18,7 +18,7 @@ Chatbot yang terintegrasi dengan dua AI provider: Google Gemini dan Grok AI. Cha
 Pastikan file `.env.local` berisi API keys yang valid:
 
 ```bash
-GROK_API_KEY=your-grok-api-key-here
+OPENAI_API_KEY=your-openai-api-key-here
 GEMINI_API_KEY=your-gemini-api-key-here
 ```
 
@@ -45,7 +45,7 @@ Endpoint untuk mengirim pesan ke chatbot.
       "content": "Apa keahlian utama Anda?"
     }
   ],
-  "provider": "gemini" // atau "grok"
+  "provider":         provider: "openai", // atau "gemini"
 }
 ```
 

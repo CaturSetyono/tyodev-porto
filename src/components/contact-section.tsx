@@ -152,14 +152,14 @@ const ContactSection = React.memo(function ContactSection() {
                   Gemini AI
                 </button>
                 <button
-                  onClick={() => setAiProvider("grok")}
+                  onClick={() => setAiProvider("openai")}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                    aiProvider === "grok"
+                    aiProvider === "openai"
                       ? "bg-cyan-500/30 text-cyan-300 shadow-sm"
                       : "text-white/70 hover:text-white"
                   }`}
                 >
-                  Grok AI
+                  OpenAI
                 </button>
               </div>
             </div>

@@ -9,7 +9,7 @@ export interface ApiChatMessage {
   content: string;
 }
 
-export type AIProvider = "gemini" | "grok";
+export type AIProvider = "gemini" | "openai";
 
 export interface ChatResponse {
   message: string;

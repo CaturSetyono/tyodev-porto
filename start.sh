@@ -7,7 +7,7 @@ echo "======================================="
 if [ ! -f .env.local ]; then
     echo "❌ Error: .env.local file not found!"
     echo "Please create .env.local with your API keys:"
-    echo "GROK_API_KEY=your-grok-api-key"
+    echo "OPENAI_API_KEY=your-openai-api-key"
     echo "GEMINI_API_KEY=your-gemini-api-key"
     exit 1
 fi

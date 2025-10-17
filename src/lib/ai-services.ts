@@ -5,14 +5,14 @@ import OpenAI from 'openai';
 const geminiApiKey = process.env.GEMINI_API_KEY;
 const genAI = geminiApiKey ? new GoogleGenerativeAI(geminiApiKey) : null;
 
-// Konfigurasi Grok (menggunakan OpenAI SDK)
-const grokApiKey = process.env.GROK_API_KEY;
-const grokClient = grokApiKey ? new OpenAI({
-  apiKey: grokApiKey,
-  baseURL: 'https://api.x.ai/v1',
+// Konfigurasi OpenAI
+const openaiApiKey = process.env.OPENAI_API_KEY;
+const openaiClient = openaiApiKey ? new OpenAI({
+  apiKey: openaiApiKey,
+  baseURL: 'https://openrouter.ai/api/v1',
 }) : null;
 
-export type AIProvider = 'gemini' | 'grok';
+export type AIProvider = 'gemini' | 'openai';
 
 export interface ChatMessage {
   role: 'user' | 'assistant';
@@ -48,7 +48,7 @@ export async function chatWithGemini(messages: ChatMessage[]): Promise<string> {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-pro' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
     
     // Convert messages ke format yang sesuai dengan Gemini
     const chatHistory = messages.slice(0, -1).map(msg => ({
@@ -72,9 +72,9 @@ export async function chatWithGemini(messages: ChatMessage[]): Promise<string> {
   }
 }
 
-export async function chatWithGrok(messages: ChatMessage[]): Promise<string> {
-  if (!grokClient) {
-    throw new Error('Grok API key tidak tersedia');
+export async function chatWithOpenAI(messages: ChatMessage[]): Promise<string> {
+  if (!openaiClient) {
+    throw new Error('OpenAI API key tidak tersedia');
   }
 
   try {
@@ -84,8 +84,8 @@ export async function chatWithGrok(messages: ChatMessage[]): Promise<string> {
       content: portfolioContext,
     };
 
-    const response = await grokClient.chat.completions.create({
-      model: 'grok-beta',
+    const response = await openaiClient.chat.completions.create({
+      model: 'openai/gpt-3.5-turbo',
       messages: [systemMessage, ...messages],
       max_tokens: 500,
       temperature: 0.7,
@@ -93,8 +93,8 @@ export async function chatWithGrok(messages: ChatMessage[]): Promise<string> {
 
     return response.choices[0]?.message?.content || 'Maaf, tidak ada respons yang tersedia.';
   } catch (error) {
-    console.error('Error with Grok API:', error);
-    throw new Error('Gagal mendapatkan respons dari Grok');
+    console.error('Error with OpenAI API:', error);
+    throw new Error('Gagal mendapatkan respons dari OpenAI');
   }
 }
 
@@ -105,8 +105,8 @@ export async function chatWithAI(
   switch (provider) {
     case 'gemini':
       return await chatWithGemini(messages);
-    case 'grok':
-      return await chatWithGrok(messages);
+    case 'openai':
+      return await chatWithOpenAI(messages);
     default:
       throw new Error('Provider AI tidak valid');
   }

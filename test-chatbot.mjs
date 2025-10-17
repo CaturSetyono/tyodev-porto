@@ -48,10 +48,10 @@ const testChatbot = async () => {
     console.log("❌ Gemini test failed:", error.message);
   }
 
-  // Test 3: Chat with Grok
+  // Test 3: Chat with OpenAI
   try {
-    console.log("\n3️⃣ Testing chat with Grok...");
-    const grokResponse = await fetch(`${baseUrl}/api/chat`, {
+    console.log("\n3️⃣ Testing chat with OpenAI...");
+    const openaiResponse = await fetch(`${baseUrl}/api/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -63,21 +63,21 @@ const testChatbot = async () => {
             content: "Ceritakan tentang pengalaman Anda sebagai developer",
           },
         ],
-        provider: "grok",
+        provider: "openai",
       }),
     });
 
-    const grokData = await grokResponse.json();
-    if (grokResponse.ok) {
+    const openaiData = await openaiResponse.json();
+    if (openaiResponse.ok) {
       console.log(
-        "✅ Grok response:",
-        grokData.message.substring(0, 100) + "..."
+        "✅ OpenAI response:",
+        openaiData.message.substring(0, 100) + "..."
       );
     } else {
-      console.log("❌ Grok error:", grokData.error);
+      console.log("❌ OpenAI error:", openaiData.error);
     }
   } catch (error) {
-    console.log("❌ Grok test failed:", error.message);
+    console.log("❌ OpenAI test failed:", error.message);
   }
 
   console.log("\n🏁 Test completed!");

@@ -34,7 +34,7 @@ Keahlian:
 - Tools: Git, Docker, Figma
 
 Pengalaman:
-- 3+ tahun pengembangan web dan mobile
+- 1+ tahun pengembangan web 
 - Spesialisasi dalam pembuatan aplikasi e-commerce, dashboard admin, dan aplikasi mobile
 - Pernah menangani proyek untuk UMKM dan startup
 - Berpengalaman dalam optimasi performa dan SEO

@@ -58,10 +58,10 @@ const Navbar = () => {
     >
       <nav className="max-w-6xl mx-auto px-6 mt-2 md:mt-4">
         <div
-          className={`flex items-center justify-between rounded-2xl px-6 py-3 transition-all duration-300 border border-white/10 shadow-lg ${
+          className={`flex items-center justify-between rounded-xl px-6 py-3 transition-all duration-300 border border-slate-600/30 ${
             scrolled
-              ? "bg-black/40 backdrop-blur-lg"
-              : "bg-white/5 backdrop-blur-md"
+              ? "bg-slate-900/80 backdrop-blur-lg"
+              : "bg-slate-800/50 backdrop-blur-md"
           }`}
         >
           {/* Logo */}
@@ -87,7 +87,7 @@ const Navbar = () => {
                   {item}
                 </Link>
                 {activeSection === item.toLowerCase() && (
-                  <span className="absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-pink-500 to-purple-500 rounded-full animate-[slideIn_0.3s_ease]"></span>
+                  <span className="absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-cyan-400 to-indigo-400 rounded-full animate-[slideIn_0.3s_ease]"></span>
                 )}
               </li>
             ))}
@@ -95,10 +95,10 @@ const Navbar = () => {
               <Button
                 asChild
                 variant="ghost"
-                className={`relative overflow-hidden transition-all duration-300 rounded-full ${
+                className={`relative overflow-hidden transition-all duration-300 rounded-lg ${
                   activeSection === "contact"
-                    ? "bg-gradient-to-r from-pink-500 to-purple-500 text-white"
-                    : "text-white/80 hover:text-white hover:bg-white/10"
+                    ? "bg-gradient-to-r from-cyan-500/80 to-indigo-500/80 text-white"
+                    : "text-white/80 hover:text-white hover:bg-slate-700/50"
                 }`}
               >
                 <Link href="#contact">
@@ -111,7 +111,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-white p-2 rounded-md hover:bg-white/10 transition"
+            className="md:hidden text-white p-2 rounded-md hover:bg-slate-700/50 transition"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -120,7 +120,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <div className="md:hidden mt-3 rounded-2xl bg-black/50 backdrop-blur-lg border border-white/10 shadow-lg p-4 animate-fadeIn">
+          <div className="md:hidden mt-3 rounded-xl bg-slate-900/80 backdrop-blur-lg border border-slate-600/30 p-4 animate-fadeIn">
             <ul className="flex flex-col gap-4">
               {navItems.map((item) => (
                 <li key={item}>
@@ -141,7 +141,7 @@ const Navbar = () => {
                 <Button
                   asChild
                   variant="ghost"
-                  className="w-full bg-gradient-to-r from-pink-500 to-purple-500 text-white"
+                  className="w-full bg-gradient-to-r from-cyan-500/80 to-indigo-500/80 text-white"
                   onClick={() => setMenuOpen(false)}
                 >
                   <Link href="#contact">Contact</Link>

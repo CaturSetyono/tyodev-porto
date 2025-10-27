@@ -86,12 +86,12 @@ const ContactSection = React.memo(function ContactSection() {
   return (
     <section
       id="contact"
-      className="py-20 bg-gradient-to-b from-indigo-950 to-slate-900 relative overflow-hidden"
+      className="py-20 bg-gradient-to-b from-slate-900 to-slate-950 relative overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 right-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-20 right-10 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 left-10 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -137,10 +137,10 @@ const ContactSection = React.memo(function ContactSection() {
           </div>
 
           {/* Chatbot */}
-          <div className="bg-white/5 backdrop-blur-lg border border-white/10 rounded-2xl p-5 max-w-2xl mx-auto shadow-lg">
+          <div className="bg-slate-800/50 backdrop-blur-lg border border-slate-700/30 rounded-xl p-5 max-w-2xl mx-auto">
             {/* AI Provider Selector */}
             <div className="flex justify-center mb-4">
-              <div className="flex bg-white/10 rounded-lg p-1">
+              <div className="flex bg-slate-700/50 rounded-lg p-1">
                 <button
                   onClick={() => setAiProvider("gemini")}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
@@ -225,7 +225,7 @@ const ContactSection = React.memo(function ContactSection() {
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 placeholder="Tanyakan sesuatu tentang saya..."
-                className="w-full px-5 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400 text-lg"
+                className="w-full px-5 py-3 rounded-lg bg-slate-700/50 border border-slate-600/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 text-lg"
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
               />
               <Button

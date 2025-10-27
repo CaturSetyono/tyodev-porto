@@ -34,11 +34,11 @@ const AboutSection = React.memo(function AboutSection() {
   ];
 
   return (
-    <section id="about" className="py-20 bg-gradient-to-b from-violet-950 to-cyan-950 relative overflow-hidden">
-      {/* Background Elements */}
+    <section id="about" className="py-20 bg-gradient-to-b from-slate-900 to-slate-800 relative overflow-hidden">
+      {/* Background Elements - Softer */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-10 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-20 right-10 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -70,11 +70,11 @@ const AboutSection = React.memo(function AboutSection() {
 
             {/* Stats */}
             <div className="grid grid-cols-2 gap-6">
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 shadow-lg shadow-cyan-900/10">
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700/30">
                 <div className="text-3xl font-bold text-cyan-300 mb-2">50+</div>
                 <div className="text-white/60">Projects Completed</div>
               </div>
-              <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 shadow-lg shadow-indigo-900/10">
+              <div className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700/30">
                 <div className="text-3xl font-bold text-indigo-300 mb-2">
                   25+
                 </div>
@@ -133,18 +133,18 @@ const AboutSection = React.memo(function AboutSection() {
                 return (
                   <div
                     key={index}
-                    className={`relative p-6 rounded-2xl border transition-all duration-300 cursor-pointer ${
+                    className={`relative p-6 rounded-xl border transition-all duration-300 cursor-pointer ${
                       activeCard === index
-                        ? "bg-white/10 border-cyan-500/50 scale-105 shadow-lg"
-                        : "bg-white/5 border-white/10 hover:bg-white/8"
+                        ? "bg-slate-800/70 border-cyan-500/50 shadow-lg"
+                        : "bg-slate-800/30 border-slate-700/30 hover:bg-slate-800/50"
                     }`}
                     onMouseEnter={() => setActiveCard(index)}
                   >
                     <div
-                      className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${
+                      className={`w-12 h-12 rounded-lg flex items-center justify-center mb-4 ${
                         activeCard === index
-                          ? "bg-gradient-to-r from-cyan-500 to-indigo-500"
-                          : "bg-white/10"
+                          ? "bg-gradient-to-r from-cyan-500/80 to-indigo-500/80"
+                          : "bg-slate-700/50"
                       }`}
                     >
                       <Icon className="h-6 w-6 text-white" />
@@ -160,9 +160,9 @@ const AboutSection = React.memo(function AboutSection() {
               })}
             </div>
 
-            {/* Decorative Elements */}
-            <div className="absolute -top-4 -right-4 w-24 h-24 border border-cyan-500/30 rounded-full" />
-            <div className="absolute -bottom-4 -left-4 w-16 h-16 bg-gradient-to-r from-cyan-500/20 to-indigo-500/20 rounded-full blur-xl" />
+            {/* Decorative Elements - Softer */}
+            <div className="absolute -top-4 -right-4 w-20 h-20 border border-cyan-500/20 rounded-full" />
+            <div className="absolute -bottom-4 -left-4 w-12 h-12 bg-gradient-to-r from-cyan-500/10 to-indigo-500/10 rounded-full blur-xl" />
           </div>
         </div>
       </div>

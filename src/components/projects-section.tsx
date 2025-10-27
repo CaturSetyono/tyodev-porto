@@ -187,7 +187,7 @@ const ProjectsSection = React.memo(function ProjectsSection() {
 
                 {/* Featured Badge */}
                 {project.featured && (
-                  <div className="absolute top-4 left-4 bg-gradient-to-r from-cyan-600 to-indigo-600 text-white px-3 py-1 rounded-full text-xs font-medium shadow-md">
+                  <div className="absolute top-4 left-4 bg-gradient-to-r from-cyan-600/80 to-indigo-600/80 text-white px-3 py-1 rounded-full text-xs font-medium">
                     Featured
                   </div>
                 )}
@@ -207,7 +207,7 @@ const ProjectsSection = React.memo(function ProjectsSection() {
                   {project.technologies.map((tech, techIndex) => (
                     <span
                       key={techIndex}
-                      className="px-3 py-1 bg-white/10 text-white/80 text-xs rounded-full border border-white/20"
+                      className="px-3 py-1 bg-slate-600/50 text-white/80 text-xs rounded-full border border-slate-500/30"
                     >
                       {tech}
                     </span>
@@ -215,7 +215,7 @@ const ProjectsSection = React.memo(function ProjectsSection() {
                 </div>
 
                 {/* View Project Button */}
-                <Button className="w-full bg-gradient-to-r from-cyan-600/20 to-indigo-600/20 hover:from-cyan-600 hover:to-indigo-600 text-white border border-cyan-500/30 hover:border-transparent transition-all duration-300 group/btn shadow-md hover:shadow-lg">
+                <Button className="w-full bg-gradient-to-r from-cyan-600/30 to-indigo-600/30 hover:from-cyan-600/80 hover:to-indigo-600/80 text-white border border-cyan-500/30 hover:border-transparent transition-all duration-300 group/btn">
                   View Project
                   <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                 </Button>
@@ -228,7 +228,7 @@ const ProjectsSection = React.memo(function ProjectsSection() {
         <div className="text-center mt-16">
           <Button
             size="lg"
-            className="bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-700 hover:to-indigo-700 text-white border-0 group shadow-lg shadow-cyan-900/20"
+            className="bg-gradient-to-r from-cyan-600/80 to-indigo-600/80 hover:from-cyan-700/80 hover:to-indigo-700/80 text-white border-0 group"
           >
             View All Projects
             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />

@@ -107,7 +107,7 @@ const ProjectsSection = React.memo(function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="py-20 bg-gradient-to-b from-cyan-950 to-indigo-950 relative overflow-hidden"
+      className="py-20 bg-gradient-to-b from-slate-800 to-slate-900 relative overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0">
@@ -139,10 +139,10 @@ const ProjectsSection = React.memo(function ProjectsSection() {
             <button
               key={filter.key}
               onClick={() => setActiveFilter(filter.key)}
-              className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+              className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
                 activeFilter === filter.key
-                  ? "bg-gradient-to-r from-cyan-600 to-indigo-600 text-white shadow-lg"
-                  : "bg-white/5 text-white/70 hover:text-white hover:bg-white/10 border border-white/10"
+                  ? "bg-gradient-to-r from-cyan-600/80 to-indigo-600/80 text-white"
+                  : "bg-slate-700/30 text-white/70 hover:text-white hover:bg-slate-700/50 border border-slate-600/30"
               }`}
             >
               {filter.label}
@@ -155,7 +155,7 @@ const ProjectsSection = React.memo(function ProjectsSection() {
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
-              className="group bg-white/5 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/10 hover:bg-white/8 transition-all duration-500 hover:scale-105 hover:shadow-2xl"
+              className="group bg-slate-700/30 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-600/30 hover:bg-slate-700/50 transition-all duration-500"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Project Image */}
@@ -165,21 +165,21 @@ const ProjectsSection = React.memo(function ProjectsSection() {
                   alt={project.title}
                   width={400}
                   height={192}
-                  className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full h-48 object-cover transition-transform duration-500"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
                 {/* Project Links */}
                 <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                   <Button
                     size="icon"
-                    className="bg-white/20 backdrop-blur-sm hover:bg-white/30 border-0"
+                    className="bg-slate-800/70 backdrop-blur-sm hover:bg-slate-700/70 border-0"
                   >
                     <ExternalLink className="h-4 w-4 text-white" />
                   </Button>
                   <Button
                     size="icon"
-                    className="bg-white/20 backdrop-blur-sm hover:bg-white/30 border-0"
+                    className="bg-slate-800/70 backdrop-blur-sm hover:bg-slate-700/70 border-0"
                   >
                     <Github className="h-4 w-4 text-white" />
                   </Button>

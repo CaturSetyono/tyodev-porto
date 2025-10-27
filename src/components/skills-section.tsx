@@ -48,11 +48,11 @@ const SkillsSection = React.memo(function SkillsSection() {
   return (
     <section
       id="skills"
-      className="py-20 bg-indigo-950 relative overflow-hidden"
+      className="py-20 bg-slate-800 relative overflow-hidden"
     >
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.3)_1px,transparent_0)] bg-[length:40px_40px]" />
+      {/* Background Pattern - Softer */}
+      <div className="absolute inset-0 opacity-3">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-[length:50px_50px]" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
@@ -75,15 +75,15 @@ const SkillsSection = React.memo(function SkillsSection() {
 
         {/* Category Tabs */}
         <div className="flex justify-center mb-12">
-          <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-2 border border-white/10">
+          <div className="bg-slate-700/50 backdrop-blur-sm rounded-xl p-2 border border-slate-600/30">
             {Object.entries(skillCategories).map(([key, category]) => (
               <button
                 key={key}
                 onClick={() => setActiveCategory(key)}
-                className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
                   activeCategory === key
-                    ? "bg-gradient-to-r from-cyan-600 to-indigo-600 text-white shadow-lg"
-                    : "text-white/70 hover:text-white hover:bg-white/5"
+                    ? "bg-gradient-to-r from-cyan-600/80 to-indigo-600/80 text-white"
+                    : "text-white/70 hover:text-white hover:bg-slate-600/50"
                 }`}
               >
                 {category.title}
@@ -99,7 +99,7 @@ const SkillsSection = React.memo(function SkillsSection() {
           ].skills.map((skill, index) => (
             <div
               key={skill.name}
-              className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/8 transition-all duration-300 group"
+              className="bg-slate-700/30 backdrop-blur-sm rounded-xl p-6 border border-slate-600/30 hover:bg-slate-700/50 transition-all duration-300 group"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex items-center justify-between mb-4">
@@ -110,12 +110,11 @@ const SkillsSection = React.memo(function SkillsSection() {
               </div>
 
               {/* Progress Bar */}
-              <div className="relative h-3 bg-white/10 rounded-full overflow-hidden">
+              <div className="relative h-3 bg-slate-600/50 rounded-full overflow-hidden">
                 <div
-                  className={`absolute top-0 left-0 h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-1000 ease-out group-hover:shadow-lg`}
+                  className={`absolute top-0 left-0 h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-1000 ease-out`}
                   style={{
                     width: `${skill.level}%`,
-                    boxShadow: `0 0 20px rgba(6, 182, 212, 0.3)`,
                   }}
                 />
               </div>
@@ -131,7 +130,7 @@ const SkillsSection = React.memo(function SkillsSection() {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <div className="bg-gradient-to-r from-cyan-500/10 to-indigo-500/10 backdrop-blur-sm rounded-2xl p-8 border border-white/10 max-w-2xl mx-auto shadow-lg">
+          <div className="bg-slate-700/30 backdrop-blur-sm rounded-xl p-8 border border-slate-600/30 max-w-2xl mx-auto">
             <h3 className="text-2xl font-bold text-white mb-4">
               Tertarik untuk berkolaborasi?
             </h3>
@@ -139,7 +138,7 @@ const SkillsSection = React.memo(function SkillsSection() {
               Mari diskusikan project Anda dan bagaimana saya bisa membantu
               mewujudkannya
             </p>
-            <button className="bg-gradient-to-r from-cyan-600 to-indigo-600 hover:from-cyan-700 hover:to-indigo-700 text-white px-8 py-3 rounded-xl font-medium transition-all duration-300 hover:shadow-lg hover:scale-105">
+            <button className="bg-gradient-to-r from-cyan-600/80 to-indigo-600/80 hover:from-cyan-700/80 hover:to-indigo-700/80 text-white px-8 py-3 rounded-lg font-medium transition-all duration-300">
               Make it Happen
             </button>
           </div>

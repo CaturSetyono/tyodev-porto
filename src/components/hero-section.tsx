@@ -2,8 +2,8 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
-import { BackgroundBeams } from "@/components/ui/background-beams";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { GentleBackground } from "@/components/ui/gentle-background";
+import Image from "next/image";
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
@@ -17,7 +17,7 @@ export default function HeroSection() {
       className="relative min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900"
     >
       <div className="container mx-auto px-6 py-16 max-w-6xl md:pt-32">
-        <div className="bg-gray-900 rounded-2xl shadow-2xl border border-slate-700/50 overflow-hidden backdrop-blur-sm">
+        <div className="bg-slate-800/50 rounded-xl border border-slate-700/30 overflow-hidden backdrop-blur-sm">
           <div className="grid md:grid-cols-2 gap-0">
             {/* Left Section - Content */}
             <div className="p-8 md:p-12 flex flex-col justify-center">
@@ -74,18 +74,23 @@ export default function HeroSection() {
               </div>
             </div>
 
-            {/* Right Section - Image/Visual */}
+            {/* Right Section - Profile Image */}
             <div className="bg-transparent p-8 md:p-12 flex flex-col justify-center items-center">
-              <DotLottieReact
-                src="https://lottie.host/abe0c54f-4d9c-4aa3-985b-f88247119efa/6N5K7c47Cn.lottie"
-                loop
-                autoplay
-              />
+              <div className="relative w-64 h-64 mx-auto">
+                {/* Placeholder for profile image with modern design */}
+                <div className="w-full h-full bg-gradient-to-br from-cyan-400/20 to-indigo-500/20 rounded-2xl flex items-center justify-center border border-slate-600/30 backdrop-blur-sm">
+                  {/* Professional icon or initials */}
+                  <div className="text-6xl font-bold text-cyan-400/80">CS</div>
+                </div>
+                {/* Subtle decorative elements */}
+                <div className="absolute -top-2 -right-2 w-4 h-4 bg-cyan-400/50 rounded-full animate-pulse" />
+                <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-indigo-400/50 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+              </div>
             </div>
           </div>
         </div>
       </div>
-      <BackgroundBeams />
+      <GentleBackground />
     </section>
   );
 }

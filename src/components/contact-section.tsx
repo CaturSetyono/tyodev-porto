@@ -1,6 +1,7 @@
-import { Button } from "@/components/ui/button";
-import { Mail, Github, Linkedin, Send, User, Bot } from "lucide-react";
 import React, { useState, useCallback } from "react";
+import { Mail, Github, Linkedin, Send, User, Bot } from "lucide-react";
+
+import { Button } from "@/components/ui/button";
 import type {
   ChatMessage,
   AIProvider,
@@ -94,7 +95,7 @@ const ContactSection = React.memo(function ContactSection() {
         <div className="absolute bottom-20 left-10 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-6 max-w-6xl relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           {/* Title */}
           <div className="inline-block px-4 py-2 bg-cyan-500/20 rounded-full border border-cyan-500/30 mb-6">
@@ -201,15 +202,15 @@ const ContactSection = React.memo(function ContactSection() {
                   <div className="px-5 py-3 rounded-xl bg-cyan-500/20 text-cyan-100 text-left">
                     <div className="flex items-center gap-2">
                       <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-cyan-300 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-cyan-300 rounded-full animate-bounce" />
                         <div
                           className="w-2 h-2 bg-cyan-300 rounded-full animate-bounce"
                           style={{ animationDelay: "0.1s" }}
-                        ></div>
+                        />
                         <div
                           className="w-2 h-2 bg-cyan-300 rounded-full animate-bounce"
                           style={{ animationDelay: "0.2s" }}
-                        ></div>
+                        />
                       </div>
                       <span className="text-sm">Sedang mengetik...</span>
                     </div>

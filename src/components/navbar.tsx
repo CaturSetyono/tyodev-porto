@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "./ui/button";
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+
+import { Button } from "./ui/button";
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
@@ -87,7 +88,7 @@ const Navbar = () => {
                   {item}
                 </Link>
                 {activeSection === item.toLowerCase() && (
-                  <span className="absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-cyan-400 to-indigo-400 rounded-full animate-[slideIn_0.3s_ease]"></span>
+                  <span className="absolute left-0 -bottom-1 h-[2px] w-full bg-gradient-to-r from-cyan-400 to-indigo-400 rounded-full animate-[slideIn_0.3s_ease]" />
                 )}
               </li>
             ))}
@@ -103,7 +104,7 @@ const Navbar = () => {
               >
                 <Link href="#contact">
                   Contact
-                  <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] animate-shimmer"></span>
+                  <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] animate-shimmer" />
                 </Link>
               </Button>
             </li>

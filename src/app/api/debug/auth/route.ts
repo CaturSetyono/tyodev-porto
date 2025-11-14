@@ -8,8 +8,11 @@ export const GET = withApiHandler(
         isAuthenticated: isAdmin,
         session: adminSession
           ? {
-              id: adminSession.id,
-              username: adminSession.username,
+              id: adminSession.user.id,
+              email: adminSession.user.email,
+              fullName: adminSession.user.full_name || null,
+              role: adminSession.user.role,
+              expires: adminSession.expires,
             }
           : null,
       },

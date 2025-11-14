@@ -212,8 +212,12 @@ export default function HeroSection() {
                 <div ref={buttonsRef} className="flex gap-3 pt-2 relative z-20">
                   <Button
                     className="bg-cyan-500 hover:bg-cyan-600 hover:shadow-lg hover:shadow-cyan-500/25 text-white transition-all duration-300 group relative z-30 cursor-pointer"
-                    onMouseEnter={(e) => handleButtonHover(e, true)}
-                    onMouseLeave={(e) => handleButtonHover(e, false)}
+                    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      handleButtonHover(e, true)
+                    }
+                    onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      handleButtonHover(e, false)
+                    }
                     onClick={() => {
                       // Use CTA URL from cta_url field
                       const ctaUrl = heroData?.cta_url || "#projects";
@@ -237,8 +241,12 @@ export default function HeroSection() {
                   <Button
                     variant="outline"
                     className="border-slate-600 text-slate-300 hover:bg-slate-700 bg-transparent hover:border-cyan-400 hover:text-cyan-300 hover:shadow-lg hover:shadow-slate-700/50 transition-all duration-300 group relative z-30 cursor-pointer"
-                    onMouseEnter={(e) => handleButtonHover(e, true)}
-                    onMouseLeave={(e) => handleButtonHover(e, false)}
+                    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      handleButtonHover(e, true)
+                    }
+                    onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      handleButtonHover(e, false)
+                    }
                     onClick={handleDownloadCV}
                   >
                     <Download className="mr-2 h-4 w-4 group-hover:translate-y-0.5 transition-transform" />{" "}

@@ -31,7 +31,7 @@ export default function AdminAboutPage() {
   useEffect(() => {
     const checkAuthAndLoadData = async () => {
       try {
-        const authResponse = await fetch("/api/admin/auth/me");
+        const authResponse = await fetch("/api/auth/me");
         if (!authResponse.ok) {
           router.push("/admin");
           return;

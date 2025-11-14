@@ -219,7 +219,9 @@ export default function HeroSection() {
                       const ctaUrl = heroData?.cta_url || "#projects";
                       if (ctaUrl.startsWith("#")) {
                         // Internal link - scroll to element
-                        const targetElement = document.getElementById(ctaUrl.substring(1));
+                        const targetElement = document.getElementById(
+                          ctaUrl.substring(1)
+                        );
                         if (targetElement) {
                           targetElement.scrollIntoView({ behavior: "smooth" });
                         }
@@ -248,8 +250,12 @@ export default function HeroSection() {
                     size="icon"
                     variant="ghost"
                     className="text-slate-400 hover:text-cyan-400 hover:bg-cyan-400/10 hover:shadow-lg hover:shadow-cyan-400/20 transition-all duration-300 group relative z-30 cursor-pointer"
-                    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => handleIconHover(e, true)}
-                    onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => handleIconHover(e, false)}
+                    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      handleIconHover(e, true)
+                    }
+                    onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      handleIconHover(e, false)
+                    }
                     onClick={() => handleSocialClick("github")}
                     aria-label="Visit GitHub profile"
                   >
@@ -259,8 +265,12 @@ export default function HeroSection() {
                     size="icon"
                     variant="ghost"
                     className="text-slate-400 hover:text-cyan-400 hover:bg-cyan-400/10 hover:shadow-lg hover:shadow-cyan-400/20 transition-all duration-300 group relative z-30 cursor-pointer"
-                    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => handleIconHover(e, true)}
-                    onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => handleIconHover(e, false)}
+                    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      handleIconHover(e, true)
+                    }
+                    onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      handleIconHover(e, false)
+                    }
                     onClick={() => handleSocialClick("linkedin")}
                     aria-label="Visit LinkedIn profile"
                   >
@@ -270,8 +280,12 @@ export default function HeroSection() {
                     size="icon"
                     variant="ghost"
                     className="text-slate-400 hover:text-cyan-400 hover:bg-cyan-400/10 hover:shadow-lg hover:shadow-cyan-400/20 transition-all duration-300 group relative z-30 cursor-pointer"
-                    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => handleIconHover(e, true)}
-                    onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => handleIconHover(e, false)}
+                    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      handleIconHover(e, true)
+                    }
+                    onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) =>
+                      handleIconHover(e, false)
+                    }
                     onClick={() => handleSocialClick("email")}
                     aria-label="Send email"
                   >

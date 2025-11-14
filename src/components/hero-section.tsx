@@ -89,8 +89,8 @@ export default function HeroSection() {
   // Handle CV download
   const handleDownloadCV = async () => {
     try {
-      // Use CV URL from hero data (mapped to cta_url field)
-      const cvUrl = heroData?.cta_url;
+      // Use CV URL from hero data
+      const cvUrl = heroData?.cv_url;
       if (cvUrl) {
         // Validate URL to prevent XSS
         try {
@@ -122,7 +122,7 @@ export default function HeroSection() {
     const socialLinks = {
       github: "https://github.com/CaturSetyono",
       linkedin: "https://linkedin.com/in/catursetyono",
-      email: "mailto:catur@example.com",
+      email: "mailto:catursetyono542@gmail.com",
     };
 
     const url = socialLinks[platform as keyof typeof socialLinks];
@@ -215,14 +215,21 @@ export default function HeroSection() {
                     onMouseEnter={(e) => handleButtonHover(e, true)}
                     onMouseLeave={(e) => handleButtonHover(e, false)}
                     onClick={() => {
-                      const projectsSection =
-                        document.getElementById("projects");
-                      if (projectsSection) {
-                        projectsSection.scrollIntoView({ behavior: "smooth" });
+                      // Use CTA URL from cta_url field
+                      const ctaUrl = heroData?.cta_url || "#projects";
+                      if (ctaUrl.startsWith("#")) {
+                        // Internal link - scroll to element
+                        const targetElement = document.getElementById(ctaUrl.substring(1));
+                        if (targetElement) {
+                          targetElement.scrollIntoView({ behavior: "smooth" });
+                        }
+                      } else {
+                        // External link - open in new tab
+                        window.open(ctaUrl, "_blank", "noopener,noreferrer");
                       }
                     }}
                   >
-                    View My Work{" "}
+                    {heroData?.cta_text || "View My Work"}{" "}
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                   <Button
@@ -241,8 +248,8 @@ export default function HeroSection() {
                     size="icon"
                     variant="ghost"
                     className="text-slate-400 hover:text-cyan-400 hover:bg-cyan-400/10 hover:shadow-lg hover:shadow-cyan-400/20 transition-all duration-300 group relative z-30 cursor-pointer"
-                    onMouseEnter={(e) => handleIconHover(e, true)}
-                    onMouseLeave={(e) => handleIconHover(e, false)}
+                    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => handleIconHover(e, true)}
+                    onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => handleIconHover(e, false)}
                     onClick={() => handleSocialClick("github")}
                     aria-label="Visit GitHub profile"
                   >
@@ -252,8 +259,8 @@ export default function HeroSection() {
                     size="icon"
                     variant="ghost"
                     className="text-slate-400 hover:text-cyan-400 hover:bg-cyan-400/10 hover:shadow-lg hover:shadow-cyan-400/20 transition-all duration-300 group relative z-30 cursor-pointer"
-                    onMouseEnter={(e) => handleIconHover(e, true)}
-                    onMouseLeave={(e) => handleIconHover(e, false)}
+                    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => handleIconHover(e, true)}
+                    onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => handleIconHover(e, false)}
                     onClick={() => handleSocialClick("linkedin")}
                     aria-label="Visit LinkedIn profile"
                   >
@@ -263,8 +270,8 @@ export default function HeroSection() {
                     size="icon"
                     variant="ghost"
                     className="text-slate-400 hover:text-cyan-400 hover:bg-cyan-400/10 hover:shadow-lg hover:shadow-cyan-400/20 transition-all duration-300 group relative z-30 cursor-pointer"
-                    onMouseEnter={(e) => handleIconHover(e, true)}
-                    onMouseLeave={(e) => handleIconHover(e, false)}
+                    onMouseEnter={(e: React.MouseEvent<HTMLButtonElement>) => handleIconHover(e, true)}
+                    onMouseLeave={(e: React.MouseEvent<HTMLButtonElement>) => handleIconHover(e, false)}
                     onClick={() => handleSocialClick("email")}
                     aria-label="Send email"
                   >

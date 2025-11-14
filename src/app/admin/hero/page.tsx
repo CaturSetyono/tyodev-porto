@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import { Button } from "@/components/ui/button";
+import ImageUpload from "@/components/ui/image-upload";
 
 interface HeroSectionData {
   greeting?: string;
@@ -14,14 +15,16 @@ interface HeroSectionData {
   title?: string;
   subtitle?: string;
   description?: string;
-  cta_text?: string;
-  cta_url?: string;
-  background_image_url?: string;
+  cta_text?: string; // CTA button text
+  cta_url?: string; // Frontend CTA URL (stored in cta_text field)
+  cv_url?: string; // CV URL (stored in cta_url field)
+  profile_image_url?: string;
 }
 
 export default function AdminHeroPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
+  const [profileImageUrl, setProfileImageUrl] = useState<string>("");
   const router = useRouter();
 
   const { register, handleSubmit, setValue } = useForm<HeroSectionData>();
@@ -38,11 +41,13 @@ export default function AdminHeroPage() {
         // Load existing hero data
         const heroResponse = await fetch("/api/portfolio/hero");
         if (heroResponse.ok) {
-          const heroData = await heroResponse.json();
+          const result = await heroResponse.json();
+          const heroData = result.data;
           if (heroData) {
             Object.keys(heroData).forEach((key) => {
               setValue(key as keyof HeroSectionData, heroData[key]);
             });
+            setProfileImageUrl(heroData.profile_image_url || "");
           }
         }
       } catch (error) {
@@ -59,16 +64,26 @@ export default function AdminHeroPage() {
   const onSubmit = async (data: HeroSectionData) => {
     setIsSaving(true);
     try {
+      const submitData = {
+        ...data,
+        profile_image_url: profileImageUrl,
+      };
+
       const response = await fetch("/api/portfolio/hero", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(submitData),
       });
 
       if (!response.ok) {
-        throw new Error("Failed to update hero section");
+        const errorText = await response.text();
+        console.error("API Error Status:", response.status);
+        console.error("API Error Text:", errorText);
+        throw new Error(
+          `Failed to update hero section: ${response.status} - ${errorText}`
+        );
       }
 
       toast.success("Hero section updated successfully!");
@@ -215,19 +230,40 @@ export default function AdminHeroPage() {
             </div>
 
             <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
+                Profile Image
+              </label>
+              <ImageUpload
+                currentImageUrl={profileImageUrl}
+                onImageUploaded={(url) => setProfileImageUrl(url)}
+                uploadEndpoint="/api/upload/hero-image"
+                maxSize={5}
+                className=""
+              />
+              <p className="text-sm text-muted-foreground mt-2">
+                Upload a profile image for the hero section. Recommended size:
+                400x400px or larger.
+              </p>
+            </div>
+
+            <div className="md:col-span-2">
               <label
-                htmlFor="background_image_url"
+                htmlFor="cv_url"
                 className="block text-sm font-medium text-foreground mb-2"
               >
-                Background Image URL
+                CV Download URL
               </label>
               <input
-                id="background_image_url"
+                id="cv_url"
                 type="url"
-                {...register("background_image_url")}
+                {...register("cv_url")}
                 className="w-full px-3 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                placeholder="https://example.com/hero-bg.jpg"
+                placeholder="https://example.com/path/to/cv.pdf"
               />
+              <p className="text-sm text-muted-foreground mt-2">
+                URL to your CV/Resume file. This will be used for the download
+                button in hero section.
+              </p>
             </div>
           </div>
 

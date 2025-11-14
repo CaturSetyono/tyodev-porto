@@ -1,6 +1,19 @@
 -- ==========================================
 -- PORTFOLIO WEBSITE DATABASE SCHEMA
 -- ==========================================
+-- 
+-- IMPORTANT: FIELD MAPPING STRATEGY
+-- ==========================================
+-- Hero Section uses field repurposing for efficient data management:
+-- 
+-- Frontend Form Fields → Database Storage:
+-- - CTA Button Text    → Hardcoded in frontend ("View My Work")
+-- - CTA Button URL     → Stored in 'cta_text' field
+-- - CV Download URL    → Stored in 'cta_url' field
+-- 
+-- This approach avoids creating new database columns while providing
+-- all necessary functionality for the hero section.
+-- ==========================================
 
 -- Enable RLS (Row Level Security)
 -- This should be run in Supabase SQL Editor
@@ -71,16 +84,19 @@ CREATE TABLE about_info (
 
 -- 5. HERO SECTION TABLE
 -- ==========================================
+-- Note: Field mapping strategy for better utilization:
+-- - cta_text: Stores the CTA button URL (mapped via API)
+-- - cta_url: Stores the CV download URL (mapped via API)
 CREATE TABLE hero_section (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  greeting VARCHAR(100),
-  name VARCHAR(100),
-  title VARCHAR(255),
-  subtitle TEXT,
-  description TEXT,
-  cta_text VARCHAR(100),
-  cta_url TEXT,
-  background_image_url TEXT,
+  greeting VARCHAR(100), -- Hero greeting text (e.g., "Hello, I'm")
+  name VARCHAR(100), -- Display name
+  title VARCHAR(255), -- Professional title
+  subtitle TEXT, -- Hero subtitle
+  description TEXT, -- Hero description
+  cta_text VARCHAR(100), -- MAPPED: Stores CTA button URL via API
+  cta_url TEXT, -- MAPPED: Stores CV download URL via API
+  profile_image_url TEXT, -- Profile image URL
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
@@ -138,18 +154,21 @@ CREATE INDEX idx_contact_messages_created ON contact_messages(created_at);
 -- ==========================================
 
 -- Default Hero Section
+-- Note: Using field mapping strategy:
+-- - cta_text field stores CTA button URL
+-- - cta_url field stores CV download URL
 INSERT INTO hero_section (greeting, name, title, subtitle, description, cta_text, cta_url) VALUES
-('Hello, I''m', 'Your Name', 'Full Stack Developer', 'Building amazing web experiences', 'I create modern, responsive, and user-friendly web applications using cutting-edge technologies.', 'View My Work', '#projects');
+('Hello, I''m', 'Catur Setyono', 'Full Stack Developer', 'Building amazing web experiences', 'I create modern, responsive, and user-friendly web applications using cutting-edge technologies.', '#projects', 'https://example.com/cv.pdf');
 
 -- Default About Info
 INSERT INTO about_info (bio, email, location) VALUES
-('I am a passionate full stack developer with experience in building web applications.', 'your.email@example.com', 'Your City, Country');
+('I am a passionate full stack developer with experience in building web applications.', 'catur.setyono@example.com', 'Jakarta, Indonesia');
 
 -- Default Site Settings
 INSERT INTO site_settings (key, value, description) VALUES
-('site_title', 'Your Portfolio', 'Website title'),
-('site_description', 'Full Stack Developer Portfolio', 'Website description'),
-('site_keywords', 'developer, portfolio, web development', 'SEO keywords'),
+('site_title', 'Catur Setyono Portfolio', 'Website title'),
+('site_description', 'Full Stack Developer Portfolio - Catur Setyono', 'Website description'),
+('site_keywords', 'developer, portfolio, web development, full stack, react, next.js', 'SEO keywords'),
 ('google_analytics_id', '', 'Google Analytics ID'),
 ('maintenance_mode', 'false', 'Maintenance mode toggle');
 
@@ -158,9 +177,13 @@ INSERT INTO skills (name, category, level, icon_name, order_index) VALUES
 ('React', 'frontend', 5, 'react', 1),
 ('Next.js', 'frontend', 5, 'nextjs', 2),
 ('TypeScript', 'frontend', 4, 'typescript', 3),
-('Node.js', 'backend', 4, 'nodejs', 4),
-('PostgreSQL', 'database', 4, 'postgresql', 5),
-('Git', 'tools', 5, 'git', 6);
+('Tailwind CSS', 'frontend', 4, 'tailwindcss', 4),
+('Node.js', 'backend', 4, 'nodejs', 5),
+('Express.js', 'backend', 4, 'express', 6),
+('PostgreSQL', 'database', 4, 'postgresql', 7),
+('Supabase', 'database', 4, 'supabase', 8),
+('Git', 'tools', 5, 'git', 9),
+('Docker', 'tools', 3, 'docker', 10);
 
 -- ==========================================
 -- ENABLE ROW LEVEL SECURITY

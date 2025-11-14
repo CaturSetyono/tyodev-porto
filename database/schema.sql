@@ -1,19 +1,6 @@
 -- ==========================================
 -- PORTFOLIO WEBSITE DATABASE SCHEMA
 -- ==========================================
--- 
--- IMPORTANT: FIELD MAPPING STRATEGY
--- ==========================================
--- Hero Section uses field repurposing for efficient data management:
--- 
--- Frontend Form Fields → Database Storage:
--- - CTA Button Text    → Hardcoded in frontend ("View My Work")
--- - CTA Button URL     → Stored in 'cta_text' field
--- - CV Download URL    → Stored in 'cta_url' field
--- 
--- This approach avoids creating new database columns while providing
--- all necessary functionality for the hero section.
--- ==========================================
 
 -- Enable RLS (Row Level Security)
 -- This should be run in Supabase SQL Editor
@@ -84,9 +71,6 @@ CREATE TABLE about_info (
 
 -- 5. HERO SECTION TABLE
 -- ==========================================
--- Note: Field mapping strategy for better utilization:
--- - cta_text: Stores the CTA button URL (mapped via API)
--- - cta_url: Stores the CV download URL (mapped via API)
 CREATE TABLE hero_section (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   greeting VARCHAR(100), -- Hero greeting text (e.g., "Hello, I'm")
@@ -94,8 +78,8 @@ CREATE TABLE hero_section (
   title VARCHAR(255), -- Professional title
   subtitle TEXT, -- Hero subtitle
   description TEXT, -- Hero description
-  cta_text VARCHAR(100), -- MAPPED: Stores CTA button URL via API
-  cta_url TEXT, -- MAPPED: Stores CV download URL via API
+  cta_text VARCHAR(100), -- CTA button text
+  cta_url TEXT, -- CTA button URL
   profile_image_url TEXT, -- Profile image URL
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

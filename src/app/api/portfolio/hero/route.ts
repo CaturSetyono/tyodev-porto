@@ -18,7 +18,17 @@ export const GET = withApiHandler(
       return handleDatabaseError(error, "fetch hero section");
     }
 
-    return { data: heroSection || {} };
+    // Map database fields to frontend expected fields
+    const mappedData = heroSection
+      ? {
+          ...heroSection,
+          cta_url: heroSection.cta_text, // Frontend expects cta_url from cta_text field
+          cv_url: heroSection.cta_url, // Frontend expects cv_url from cta_url field
+          cta_text: "View My Work", // Fixed CTA text
+        }
+      : {};
+
+    return { data: mappedData };
   },
   { methods: ["GET"] }
 );
@@ -29,20 +39,16 @@ export const PUT = withApiHandler(
     const heroData = await validateRequestBody(request, (data: unknown) => {
       const body = data as Record<string, unknown>;
       return {
+        greeting: validationSchemas.optionalString(body.greeting),
+        name: validationSchemas.optionalString(body.name),
         title: validationSchemas.optionalString(body.title),
         subtitle: validationSchemas.optionalString(body.subtitle),
         description: validationSchemas.optionalString(body.description),
-        background_image_url: validationSchemas.optionalString(
-          body.background_image_url
+        profile_image_url: validationSchemas.optionalString(
+          body.profile_image_url
         ),
-        cta_text: validationSchemas.optionalString(body.cta_text),
-        cta_url: validationSchemas.optionalString(body.cta_url),
-        display_order: body.display_order
-          ? validationSchemas.requiredNumber(
-              body.display_order,
-              "Display order"
-            )
-          : undefined,
+        cta_text: validationSchemas.optionalString(body.cta_url), // CTA URL stored in cta_text field
+        cta_url: validationSchemas.optionalString(body.cv_url), // CV URL stored in cta_url field
       };
     });
 

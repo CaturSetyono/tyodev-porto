@@ -19,7 +19,7 @@ export const GentleBackground = React.memo(
     return (
       <div
         className={cn(
-          "absolute inset-0 overflow-hidden -z-10 pointer-events-none",
+          "absolute inset-0 overflow-hidden z-0 pointer-events-none",
           className
         )}
       >

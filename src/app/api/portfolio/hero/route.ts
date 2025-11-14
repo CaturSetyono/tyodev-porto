@@ -18,15 +18,8 @@ export const GET = withApiHandler(
       return handleDatabaseError(error, "fetch hero section");
     }
 
-    // Map database fields to frontend expected fields
-    const mappedData = heroSection
-      ? {
-          ...heroSection,
-          cta_url: heroSection.cta_text, // Frontend expects cta_url from cta_text field
-          cv_url: heroSection.cta_url, // Frontend expects cv_url from cta_url field
-          cta_text: "View My Work", // Fixed CTA text
-        }
-      : {};
+    // Return data as-is without confusing field mapping
+    const mappedData = heroSection || {};
 
     return { data: mappedData };
   },
@@ -47,8 +40,8 @@ export const PUT = withApiHandler(
         profile_image_url: validationSchemas.optionalString(
           body.profile_image_url
         ),
-        cta_text: validationSchemas.optionalString(body.cta_url), // CTA URL stored in cta_text field
-        cta_url: validationSchemas.optionalString(body.cv_url), // CV URL stored in cta_url field
+        cta_text: validationSchemas.optionalString(body.cta_text), // CTA button text
+        cta_url: validationSchemas.optionalString(body.cta_url), // CTA button URL
       };
     });
 

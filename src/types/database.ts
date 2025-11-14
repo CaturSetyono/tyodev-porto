@@ -111,6 +111,7 @@ export interface HeroSection {
   description?: string;
   cta_text?: string;
   cta_url?: string;
+  cv_url?: string;
   profile_image_url?: string;
   updated_at: string;
 }

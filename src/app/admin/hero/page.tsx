@@ -245,26 +245,6 @@ export default function AdminHeroPage() {
                 400x400px or larger.
               </p>
             </div>
-
-            <div className="md:col-span-2">
-              <label
-                htmlFor="cv_url"
-                className="block text-sm font-medium text-foreground mb-2"
-              >
-                CV Download URL
-              </label>
-              <input
-                id="cv_url"
-                type="url"
-                {...register("cv_url")}
-                className="w-full px-3 py-2 border border-border rounded-md focus:ring-2 focus:ring-primary focus:border-transparent"
-                placeholder="https://example.com/path/to/cv.pdf"
-              />
-              <p className="text-sm text-muted-foreground mt-2">
-                URL to your CV/Resume file. This will be used for the download
-                button in hero section.
-              </p>
-            </div>
           </div>
 
           <div className="flex justify-end space-x-4 pt-6 border-t border-border">

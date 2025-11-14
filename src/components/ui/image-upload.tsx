@@ -50,7 +50,7 @@ export default function ImageUpload({
         // Check authentication first
         const authCheck = await fetch("/api/debug/auth");
         const authResult = await authCheck.json();
-        console.log("Auth check:", authResult);
+        console.warn("Auth check:", authResult);
 
         if (!authResult.data?.isAuthenticated) {
           throw new Error("Please login to admin panel first");
@@ -64,8 +64,8 @@ export default function ImageUpload({
         const formData = new FormData();
         formData.append("file", file);
 
-        console.log("Uploading to:", uploadEndpoint);
-        console.log("File details:", {
+        console.warn("Uploading to:", uploadEndpoint);
+        console.warn("File details:", {
           name: file.name,
           size: file.size,
           type: file.type,
@@ -76,13 +76,13 @@ export default function ImageUpload({
           body: formData,
         });
 
-        console.log("Response status:", response.status);
-        console.log("Response ok:", response.ok);
+        console.warn("Response status:", response.status);
+        console.warn("Response ok:", response.ok);
 
         let result;
         try {
           result = await response.json();
-          console.log("Response data:", result);
+          console.warn("Response data:", result);
         } catch (parseError) {
           console.error("Failed to parse response:", parseError);
           throw new Error(

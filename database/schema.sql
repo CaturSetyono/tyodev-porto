@@ -11,7 +11,6 @@ CREATE TABLE projects (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   description TEXT,
-  image_url TEXT,
   demo_url TEXT,
   github_url TEXT,
   technologies TEXT[], -- Array of technologies
@@ -57,7 +56,6 @@ CREATE TABLE experiences (
 CREATE TABLE about_info (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   bio TEXT,
-  profile_image_url TEXT,
   cv_url TEXT,
   location VARCHAR(255),
   email VARCHAR(255),
@@ -80,7 +78,6 @@ CREATE TABLE hero_section (
   description TEXT, -- Hero description
   cta_text VARCHAR(100), -- CTA button text
   cta_url TEXT, -- CTA button URL
-  profile_image_url TEXT, -- Profile image URL
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 

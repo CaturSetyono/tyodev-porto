@@ -1,109 +1,118 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import ProjectCard from "@/components/ui/project-card";
+import type { Project } from "@/types/database";
+
+interface ProcessedProject {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  category: string;
+  featured: boolean;
+  tags: string[];
+  technologies: string[];
+  githubUrl?: string;
+  liveUrl?: string;
+  year: string;
+}
 
 const ProjectsSection = React.memo(function ProjectsSection() {
   const [activeFilter, setActiveFilter] = useState("all");
+  const [projects, setProjects] = useState<ProcessedProject[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const projects = useMemo(
-    () => [
-      {
-        id: 1,
-        title: "E-Commerce Platform",
-        description:
-          "Platform e-commerce modern dengan fitur lengkap, payment gateway, dan admin dashboard yang powerful.",
-        image: "/placeholder.svg?height=300&width=400",
-        category: "fullstack",
-        technologies: ["Next.js", "TypeScript", "Prisma", "Stripe"],
-        liveUrl: "#",
-        githubUrl: "#",
-        featured: true,
-      },
-      {
-        id: 2,
-        title: "Task Management App",
-        description:
-          "Aplikasi manajemen tugas dengan real-time collaboration, drag & drop, dan notifikasi push.",
-        image: "/placeholder.svg?height=300&width=400",
-        category: "frontend",
-        technologies: ["React", "Socket.io", "Framer Motion", "Tailwind"],
-        liveUrl: "#",
-        githubUrl: "#",
-        featured: false,
-      },
-      {
-        id: 3,
-        title: "AI Content Generator",
-        description:
-          "Platform AI untuk generate konten marketing dengan berbagai template dan customization options.",
-        image: "/placeholder.svg?height=300&width=400",
-        category: "fullstack",
-        technologies: ["Next.js", "OpenAI API", "PostgreSQL", "Stripe"],
-        liveUrl: "#",
-        githubUrl: "#",
-        featured: true,
-      },
-      {
-        id: 4,
-        title: "Portfolio Website",
-        description:
-          "Website portfolio interaktif dengan animasi smooth dan design yang unik untuk personal branding.",
-        image: "/placeholder.svg?height=300&width=400",
-        category: "frontend",
-        technologies: ["Next.js", "Framer Motion", "Tailwind", "GSAP"],
-        liveUrl: "#",
-        githubUrl: "#",
-        featured: false,
-      },
-      {
-        id: 5,
-        title: "Restaurant POS System",
-        description:
-          "Sistem Point of Sale untuk restoran dengan inventory management dan reporting analytics.",
-        image: "/placeholder.svg?height=300&width=400",
-        category: "fullstack",
-        technologies: ["React", "Node.js", "MongoDB", "Express"],
-        liveUrl: "#",
-        githubUrl: "#",
-        featured: false,
-      },
-      {
-        id: 6,
-        title: "Social Media Dashboard",
-        description:
-          "Dashboard analytics untuk social media dengan data visualization dan automated reporting.",
-        image: "/placeholder.svg?height=300&width=400",
-        category: "frontend",
-        technologies: ["Vue.js", "Chart.js", "Tailwind", "API Integration"],
-        liveUrl: "#",
-        githubUrl: "#",
-        featured: false,
-      },
-    ],
-    []
-  );
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const response = await fetch("/api/portfolio/projects");
+        if (response.ok) {
+          const result = await response.json();
+          // API returns { data: [...] } structure
+          const projectsData = Array.isArray(result)
+            ? result
+            : result.data || [];
 
-  const filters = useMemo(
-    () => [
-      { key: "all", label: "All Projects" },
-      { key: "featured", label: "Featured" },
-      { key: "fullstack", label: "Full Stack" },
-      { key: "frontend", label: "Frontend" },
-    ],
-    []
-  );
+          // Convert API data to component format
+          const processedProjects: ProcessedProject[] = (
+            projectsData as Project[]
+          ).map((project: Project) => ({
+            id: project.id,
+            title: project.title,
+            description: project.description || "",
+            image: "/api/placeholder/400/300", // Default placeholder image
+            category: "web", // Default category since not in database
+            featured: project.featured || false,
+            tags: Array.isArray(project.technologies)
+              ? project.technologies
+              : [],
+            technologies: Array.isArray(project.technologies)
+              ? project.technologies
+              : [],
+            githubUrl: project.github_url || "",
+            liveUrl: project.demo_url || "",
+            year: project.created_at
+              ? new Date(project.created_at).getFullYear().toString()
+              : "2024",
+          }));
+
+          setProjects(processedProjects);
+        }
+      } catch (error) {
+        console.error("Failed to fetch projects:", error);
+        // Fallback to empty array or default projects if needed
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  const filters = [
+    { key: "all", label: "All Projects" },
+    { key: "featured", label: "Featured" },
+    { key: "web", label: "Web App" },
+    { key: "mobile", label: "Mobile" },
+    { key: "api", label: "API/Backend" },
+  ];
 
   const filteredProjects = useMemo(() => {
+    if (isLoading) return [];
+
     return projects.filter((project) => {
       if (activeFilter === "all") return true;
       if (activeFilter === "featured") return project.featured;
       return project.category === activeFilter;
     });
-  }, [activeFilter, projects]);
+  }, [activeFilter, projects, isLoading]);
+
+  // Loading skeleton
+  const LoadingSkeleton = () => (
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {Array.from({ length: 6 }).map((_, index) => (
+        <div
+          key={index}
+          className="bg-slate-800/50 rounded-xl overflow-hidden animate-pulse"
+        >
+          <div className="h-48 bg-slate-700" />
+          <div className="p-6 space-y-4">
+            <div className="h-6 bg-slate-700 rounded w-3/4" />
+            <div className="h-4 bg-slate-700 rounded w-full" />
+            <div className="h-4 bg-slate-700 rounded w-2/3" />
+            <div className="flex gap-2">
+              <div className="h-6 bg-slate-700 rounded w-16" />
+              <div className="h-6 bg-slate-700 rounded w-20" />
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <section
@@ -152,24 +161,57 @@ const ProjectsSection = React.memo(function ProjectsSection() {
         </div>
 
         {/* Projects Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project, index) => (
-            <ProjectCard key={project.id} {...project} index={index} />
-          ))}
-        </div>
+        {isLoading ? (
+          <LoadingSkeleton />
+        ) : filteredProjects.length > 0 ? (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredProjects.map((project, index) => (
+              <ProjectCard
+                key={project.id}
+                id={index} // Use index as number for ProjectCard component
+                title={project.title}
+                description={project.description}
+                image={project.image}
+                technologies={project.technologies}
+                featured={project.featured}
+                liveUrl={project.liveUrl || ""}
+                githubUrl={project.githubUrl || ""}
+                index={index}
+              />
+            ))}
+          </div>
+        ) : (
+          <div className="text-center py-16">
+            <div className="text-white/60 text-lg mb-4">
+              {activeFilter === "all"
+                ? "Belum ada project yang tersedia"
+                : `Belum ada project dengan kategori "${activeFilter}"`}
+            </div>
+            <Button
+              onClick={() => setActiveFilter("all")}
+              variant="outline"
+              className="text-cyan-400 border-cyan-400/30 hover:bg-cyan-400/10"
+            >
+              Lihat Semua Project
+            </Button>
+          </div>
+        )}
 
         {/* View All Projects Button */}
-        <div className="text-center mt-16">
-          <Button
-            size="lg"
-            className="bg-gradient-to-r from-cyan-600/80 to-indigo-600/80 hover:from-cyan-700/80 hover:to-indigo-700/80 text-white border-0 group"
-          >
-            View All Projects
-            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-          </Button>
-        </div>
+        {!isLoading && filteredProjects.length > 0 && (
+          <div className="text-center mt-16">
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-cyan-600/80 to-indigo-600/80 hover:from-cyan-700/80 hover:to-indigo-700/80 text-white border-0 group"
+            >
+              View All Projects
+              <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
 });
+
 export default ProjectsSection;

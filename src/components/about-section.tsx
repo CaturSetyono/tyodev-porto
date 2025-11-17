@@ -1,10 +1,78 @@
 "use client";
 
-import React, { useState } from "react";
-import { Code, Palette, Rocket, Users } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { Code, Palette, Rocket, Users, Download } from "lucide-react";
+import toast from "react-hot-toast";
+
+import type { AboutInfo } from "@/types/database";
 
 const AboutSection = React.memo(function AboutSection() {
   const [activeCard, setActiveCard] = useState(0);
+  const [aboutData, setAboutData] = useState<AboutInfo | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchAboutData = async () => {
+      try {
+        const response = await fetch("/api/portfolio/about");
+        if (response.ok) {
+          const result = await response.json();
+          setAboutData(result.data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch about data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAboutData();
+  }, []);
+
+  const handleDownloadCV = async () => {
+    if (!aboutData?.cv_url) {
+      toast.error("CV tidak tersedia");
+      return;
+    }
+
+    try {
+      // Extract filename from CV URL
+      const urlParts = aboutData.cv_url.split("/");
+      const filename = urlParts[urlParts.length - 1];
+
+      if (!filename) {
+        toast.error("Invalid CV URL");
+        return;
+      }
+
+      // Use download API endpoint
+      const downloadUrl = `/api/download/cv?filename=${encodeURIComponent(
+        filename
+      )}`;
+
+      const response = await fetch(downloadUrl);
+      if (!response.ok) {
+        toast.error("Gagal mengunduh CV. File tidak ditemukan.");
+        return;
+      }
+
+      const blob = await response.blob();
+      const ext = filename.split(".").pop() || "pdf";
+
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `CV-Catur-Setyono.${ext}`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      toast.success("CV berhasil diunduh!");
+    } catch (error) {
+      console.error("Download error:", error);
+      toast.error("Gagal mengunduh CV. Silakan coba lagi.");
+    }
+  };
 
   const cards = [
     {
@@ -63,11 +131,10 @@ const AboutSection = React.memo(function AboutSection() {
               </h2>
 
               <p className="text-lg text-white/70 leading-relaxed">
-                Saya adalah seorang full-stack developer yang passionate dalam
-                menciptakan pengalaman digital yang luar biasa. Dengan
-                pengalaman 3+ tahun, saya telah membantu berbagai klien
-                mewujudkan visi mereka menjadi aplikasi web yang powerful dan
-                user-friendly.
+                {isLoading
+                  ? "Loading..."
+                  : aboutData?.bio ||
+                    "Saya adalah seorang full-stack developer yang passionate dalam menciptakan pengalaman digital yang luar biasa. Dengan pengalaman 3+ tahun, saya telah membantu berbagai klien mewujudkan visi mereka menjadi aplikasi web yang powerful dan user-friendly."}
               </p>
             </div>
 

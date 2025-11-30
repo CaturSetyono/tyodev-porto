@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
 import { GentleBackground } from "@/components/ui/gentle-background";
-import Image from "next/image";
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);

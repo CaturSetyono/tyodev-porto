@@ -9,10 +9,16 @@ const FooterSection = () => {
             © {new Date().getFullYear()} TyoDev. All rights reserved.
           </div>
           <div className="flex items-center gap-6">
-            <a href="#" className="text-white/60 hover:text-cyan-300 transition-colors text-sm">
+            <a
+              href="#"
+              className="text-white/60 hover:text-cyan-300 transition-colors text-sm"
+            >
               Privacy Policy
             </a>
-            <a href="#" className="text-white/60 hover:text-cyan-300 transition-colors text-sm">
+            <a
+              href="#"
+              className="text-white/60 hover:text-cyan-300 transition-colors text-sm"
+            >
               Terms of Service
             </a>
           </div>

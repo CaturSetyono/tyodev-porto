@@ -54,7 +54,7 @@ const SkillsSection = React.memo(function SkillsSection() {
       <div className="absolute inset-0 opacity-3">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-[length:50px_50px]" />
       </div>
-      
+
       {/* Background Blobs - Consistent with other sections */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 right-0 w-96 h-96 bg-cyan-500/5 rounded-full blur-3xl" />

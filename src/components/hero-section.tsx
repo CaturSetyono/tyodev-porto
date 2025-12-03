@@ -22,7 +22,7 @@ export default function HeroSection() {
             <div className="p-8 md:p-12 flex flex-col justify-center">
               <div className="space-y-6">
                 <div className="space-y-3">
-                  <h1 className="text-3xl md:text-4xl font-bold text-white leading-tight">
+                  <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
                     Hi, I&apos;m{" "}
                     <span className="text-cyan-400">Catur Setyono</span>
                   </h1>
@@ -37,7 +37,7 @@ export default function HeroSection() {
                   high-quality user experiences.
                 </p>
                 <div className="flex gap-3 pt-2">
-                  <Button className="bg-cyan-500 hover:bg-cyan-600 text-white">
+                  <Button className="bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-600 hover:to-indigo-600 text-white border-0">
                     View Portfolio <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                   <Button
@@ -83,7 +83,10 @@ export default function HeroSection() {
                 </div>
                 {/* Subtle decorative elements */}
                 <div className="absolute -top-2 -right-2 w-4 h-4 bg-cyan-400/50 rounded-full animate-pulse" />
-                <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-indigo-400/50 rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
+                <div
+                  className="absolute -bottom-2 -left-2 w-3 h-3 bg-indigo-400/50 rounded-full animate-pulse"
+                  style={{ animationDelay: "1s" }}
+                />
               </div>
             </div>
           </div>

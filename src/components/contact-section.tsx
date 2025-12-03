@@ -117,7 +117,10 @@ const ContactSection = React.memo(function ContactSection() {
 
           {/* Tombol Kontak */}
           <div className="flex flex-col md:flex-row justify-center gap-4 mb-12">
-            <Button className="flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-600 hover:to-indigo-600 text-white border-0" size="lg">
+            <Button
+              className="flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-600 hover:to-indigo-600 text-white border-0"
+              size="lg"
+            >
               <Mail className="w-5 h-5" />
               Email Saya
             </Button>

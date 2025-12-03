@@ -34,14 +34,17 @@ const AboutSection = React.memo(function AboutSection() {
   ];
 
   return (
-    <section id="about" className="py-20 bg-gradient-to-b from-slate-900 to-slate-800 relative overflow-hidden">
+    <section
+      id="about"
+      className="py-20 bg-gradient-to-b from-slate-900 to-slate-800 relative overflow-hidden"
+    >
       {/* Background Elements - Softer */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl" />
         <div className="absolute bottom-20 right-10 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-6 max-w-6xl relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           {/* Left Content */}
           <div className="space-y-8">

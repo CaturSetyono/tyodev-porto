@@ -94,7 +94,7 @@ const ContactSection = React.memo(function ContactSection() {
         <div className="absolute bottom-20 left-10 w-80 h-80 bg-indigo-500/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-6 max-w-6xl relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           {/* Title */}
           <div className="inline-block px-4 py-2 bg-cyan-500/20 rounded-full border border-cyan-500/30 mb-6">
@@ -103,8 +103,11 @@ const ContactSection = React.memo(function ContactSection() {
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-cyan-300 bg-clip-text text-transparent mb-6">
-            Mari Berdiskusi dan Berkolaborasi
+          <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+            Mari Berdiskusi dan{" "}
+            <span className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-teal-400 bg-clip-text text-transparent">
+              Berkolaborasi
+            </span>
           </h2>
 
           <p className="text-white/70 text-lg mb-10">
@@ -114,7 +117,7 @@ const ContactSection = React.memo(function ContactSection() {
 
           {/* Tombol Kontak */}
           <div className="flex flex-col md:flex-row justify-center gap-4 mb-12">
-            <Button className="flex items-center gap-2" size="lg">
+            <Button className="flex items-center gap-2 bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-600 hover:to-indigo-600 text-white border-0" size="lg">
               <Mail className="w-5 h-5" />
               Email Saya
             </Button>
@@ -231,7 +234,7 @@ const ContactSection = React.memo(function ContactSection() {
               <Button
                 onClick={handleSend}
                 disabled={isLoading || !question.trim()}
-                className="px-5 py-3 text-lg flex items-center gap-2 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-5 py-3 text-lg flex items-center gap-2 w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-600 hover:to-indigo-600 text-white border-0"
               >
                 <Send size={20} /> {isLoading ? "Mengirim..." : "Kirim"}
               </Button>

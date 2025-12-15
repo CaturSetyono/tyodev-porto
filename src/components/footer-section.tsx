@@ -6,7 +6,7 @@ const FooterSection = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-slate-950 border-t border-slate-800 pt-16 pb-8 relative overflow-hidden">
+    <footer className="bg-slate-50 dark:bg-slate-950 border-t border-slate-200 dark:border-slate-800 pt-16 pb-8 relative overflow-hidden">
       {/* Background Elements */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent" />
       <div className="absolute -top-24 -left-24 w-64 h-64 bg-cyan-500/5 rounded-full blur-3xl pointer-events-none" />
@@ -18,11 +18,11 @@ const FooterSection = () => {
           <div className="md:col-span-2 space-y-4">
             <Link
               href="#home"
-              className="text-2xl font-bold text-white tracking-wide"
+              className="text-2xl font-bold text-slate-900 dark:text-white tracking-wide"
             >
-              tyodev<span className="text-cyan-400">.</span>
+              tyodev<span className="text-cyan-600 dark:text-cyan-400">.</span>
             </Link>
-            <p className="text-slate-400 leading-relaxed max-w-sm text-sm">
+            <p className="text-slate-600 dark:text-slate-400 leading-relaxed max-w-sm text-sm">
               Building digital experiences with modern technologies. Focused on
               creating responsive, accessible, and performant web applications
               that solve real-world problems.
@@ -30,28 +30,28 @@ const FooterSection = () => {
             <div className="flex gap-3 pt-2">
               <a
                 href="#"
-                className="text-slate-400 hover:text-cyan-400 transition-colors bg-slate-900 p-2.5 rounded-full border border-slate-800 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+                className="text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors bg-white dark:bg-slate-900 p-2.5 rounded-full border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)]"
                 aria-label="Github"
               >
                 <Github size={18} />
               </a>
               <a
                 href="#"
-                className="text-slate-400 hover:text-cyan-400 transition-colors bg-slate-900 p-2.5 rounded-full border border-slate-800 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+                className="text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors bg-white dark:bg-slate-900 p-2.5 rounded-full border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)]"
                 aria-label="LinkedIn"
               >
                 <Linkedin size={18} />
               </a>
               <a
                 href="#"
-                className="text-slate-400 hover:text-cyan-400 transition-colors bg-slate-900 p-2.5 rounded-full border border-slate-800 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+                className="text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors bg-white dark:bg-slate-900 p-2.5 rounded-full border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)]"
                 aria-label="Twitter"
               >
                 <Twitter size={18} />
               </a>
               <a
                 href="#"
-                className="text-slate-400 hover:text-cyan-400 transition-colors bg-slate-900 p-2.5 rounded-full border border-slate-800 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+                className="text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors bg-white dark:bg-slate-900 p-2.5 rounded-full border border-slate-200 dark:border-slate-800 hover:border-cyan-500/50 hover:shadow-[0_0_15px_rgba(6,182,212,0.15)]"
                 aria-label="Email"
               >
                 <Mail size={18} />
@@ -61,7 +61,7 @@ const FooterSection = () => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold mb-4 text-lg">
+            <h3 className="text-slate-900 dark:text-white font-semibold mb-4 text-lg">
               Quick Links
             </h3>
             <ul className="space-y-2.5">
@@ -70,9 +70,9 @@ const FooterSection = () => {
                   <li key={item}>
                     <Link
                       href={`#${item.toLowerCase()}`}
-                      className="text-slate-400 hover:text-cyan-400 transition-colors text-sm flex items-center gap-2 group"
+                      className="text-slate-600 dark:text-slate-400 hover:text-cyan-600 dark:hover:text-cyan-400 transition-colors text-sm flex items-center gap-2 group"
                     >
-                      <span className="w-1.5 h-1.5 rounded-full bg-slate-600 group-hover:bg-cyan-400 transition-colors" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400 dark:bg-slate-600 group-hover:bg-cyan-600 dark:group-hover:bg-cyan-400 transition-colors" />
                       {item}
                     </Link>
                   </li>
@@ -83,7 +83,9 @@ const FooterSection = () => {
 
           {/* Services */}
           <div>
-            <h3 className="text-white font-semibold mb-4 text-lg">Services</h3>
+            <h3 className="text-slate-900 dark:text-white font-semibold mb-4 text-lg">
+              Services
+            </h3>
             <ul className="space-y-2.5">
               {[
                 "Web Development",
@@ -93,7 +95,7 @@ const FooterSection = () => {
               ].map((item) => (
                 <li
                   key={item}
-                  className="text-slate-400 text-sm flex items-center gap-2"
+                  className="text-slate-600 dark:text-slate-400 text-sm flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-indigo-500/50" />
                   {item}
@@ -104,7 +106,7 @@ const FooterSection = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="pt-8 border-t border-slate-200 dark:border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="text-slate-500 text-sm flex items-center gap-1.5">
             © {currentYear} Catur Setyono. Made with{" "}
             <Heart
@@ -116,13 +118,13 @@ const FooterSection = () => {
           <div className="flex gap-6">
             <a
               href="#"
-              className="text-slate-500 hover:text-cyan-400 text-sm transition-colors"
+              className="text-slate-500 hover:text-cyan-600 dark:hover:text-cyan-400 text-sm transition-colors"
             >
               Privacy Policy
             </a>
             <a
               href="#"
-              className="text-slate-500 hover:text-cyan-400 text-sm transition-colors"
+              className="text-slate-500 hover:text-cyan-600 dark:hover:text-cyan-400 text-sm transition-colors"
             >
               Terms of Service
             </a>

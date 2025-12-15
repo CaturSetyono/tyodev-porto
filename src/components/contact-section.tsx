@@ -86,7 +86,7 @@ const ContactSection = React.memo(function ContactSection() {
   return (
     <section
       id="contact"
-      className="py-20 bg-gradient-to-b from-slate-900 to-slate-950 relative overflow-hidden"
+      className="py-20 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 relative overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0">
@@ -97,20 +97,20 @@ const ContactSection = React.memo(function ContactSection() {
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
         <div className="max-w-3xl mx-auto text-center">
           {/* Title */}
-          <div className="inline-block px-4 py-2 bg-cyan-500/20 rounded-full border border-cyan-500/30 mb-6">
-            <span className="text-cyan-300 text-sm font-medium">
+          <div className="inline-block px-4 py-2 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-full border border-cyan-500/30 mb-6">
+            <span className="text-cyan-600 dark:text-cyan-300 text-sm font-medium">
               Hubungi Saya
             </span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white leading-tight mb-6">
             Mari Berdiskusi dan{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-teal-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-cyan-500 via-indigo-500 to-teal-500 dark:from-cyan-400 dark:via-indigo-400 dark:to-teal-400 bg-clip-text text-transparent">
               Berkolaborasi
             </span>
           </h2>
 
-          <p className="text-white/70 text-lg mb-10">
+          <p className="text-slate-600 dark:text-white/70 text-lg mb-10">
             Punya proyek menarik atau ingin bekerja sama? Saya selalu terbuka
             untuk diskusi dan kolaborasi pada proyek-proyek yang menantang.
           </p>
@@ -126,7 +126,7 @@ const ContactSection = React.memo(function ContactSection() {
             </Button>
             <Button
               variant="outline"
-              className="flex items-center gap-2 border-white/20 hover:bg-white/10"
+              className="flex items-center gap-2 border-slate-200 dark:border-white/20 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-700 dark:text-white"
               size="lg"
             >
               <Linkedin className="w-5 h-5" />
@@ -134,7 +134,7 @@ const ContactSection = React.memo(function ContactSection() {
             </Button>
             <Button
               variant="outline"
-              className="flex items-center gap-2 border-white/20 hover:bg-white/10"
+              className="flex items-center gap-2 border-slate-200 dark:border-white/20 hover:bg-slate-100 dark:hover:bg-white/10 text-slate-700 dark:text-white"
               size="lg"
             >
               <Github className="w-5 h-5" />
@@ -143,16 +143,16 @@ const ContactSection = React.memo(function ContactSection() {
           </div>
 
           {/* Chatbot */}
-          <div className="bg-slate-800/50 backdrop-blur-lg border border-slate-700/30 rounded-xl p-5 max-w-2xl mx-auto">
+          <div className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg border border-slate-200/50 dark:border-slate-700/30 rounded-xl p-5 max-w-2xl mx-auto shadow-sm dark:shadow-none">
             {/* AI Provider Selector */}
             <div className="flex justify-center mb-4">
-              <div className="flex bg-slate-700/50 rounded-lg p-1">
+              <div className="flex bg-slate-100 dark:bg-slate-700/50 rounded-lg p-1">
                 <button
                   onClick={() => setAiProvider("gemini")}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                     aiProvider === "gemini"
-                      ? "bg-cyan-500/30 text-cyan-300 shadow-sm"
-                      : "text-white/70 hover:text-white"
+                      ? "bg-cyan-500/10 dark:bg-cyan-500/30 text-cyan-600 dark:text-cyan-300 shadow-sm"
+                      : "text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   Gemini AI
@@ -161,8 +161,8 @@ const ContactSection = React.memo(function ContactSection() {
                   onClick={() => setAiProvider("openai")}
                   className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
                     aiProvider === "openai"
-                      ? "bg-cyan-500/30 text-cyan-300 shadow-sm"
-                      : "text-white/70 hover:text-white"
+                      ? "bg-cyan-500/10 dark:bg-cyan-500/30 text-cyan-600 dark:text-cyan-300 shadow-sm"
+                      : "text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white"
                   }`}
                 >
                   OpenAI
@@ -170,7 +170,7 @@ const ContactSection = React.memo(function ContactSection() {
               </div>
             </div>
             {/* Chat Messages */}
-            <div className="h-64 overflow-y-auto space-y-4 mb-6 scrollbar-thin scrollbar-thumb-white/20">
+            <div className="h-64 overflow-y-auto space-y-4 mb-6 scrollbar-thin scrollbar-thumb-slate-300 dark:scrollbar-thumb-white/20">
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
@@ -179,41 +179,50 @@ const ContactSection = React.memo(function ContactSection() {
                   } animate-fadeIn`}
                 >
                   {msg.from === "bot" && (
-                    <div className="flex-shrink-0 w-9 h-9 bg-cyan-500/20 border border-cyan-400/50 rounded-full flex items-center justify-center">
-                      <Bot size={18} className="text-cyan-300" />
+                    <div className="flex-shrink-0 w-9 h-9 bg-cyan-500/10 dark:bg-cyan-500/20 border border-cyan-400/50 rounded-full flex items-center justify-center">
+                      <Bot
+                        size={18}
+                        className="text-cyan-600 dark:text-cyan-300"
+                      />
                     </div>
                   )}
                   <div
                     className={`px-5 py-3 rounded-xl max-w-[75%] text-base leading-relaxed ${
                       msg.from === "bot"
-                        ? "bg-cyan-500/20 text-cyan-100 text-left"
-                        : "bg-indigo-500/40 text-white text-right"
+                        ? "bg-cyan-50 dark:bg-cyan-500/20 text-slate-800 dark:text-cyan-100 text-left"
+                        : "bg-indigo-100 dark:bg-indigo-500/40 text-slate-800 dark:text-white text-right"
                     }`}
                   >
                     {msg.text}
                   </div>
                   {msg.from === "user" && (
-                    <div className="flex-shrink-0 w-9 h-9 bg-indigo-500/40 border border-indigo-400/50 rounded-full flex items-center justify-center">
-                      <User size={18} className="text-white" />
+                    <div className="flex-shrink-0 w-9 h-9 bg-indigo-100 dark:bg-indigo-500/40 border border-indigo-400/50 rounded-full flex items-center justify-center">
+                      <User
+                        size={18}
+                        className="text-indigo-600 dark:text-white"
+                      />
                     </div>
                   )}
                 </div>
               ))}
               {isLoading && (
                 <div className="flex items-start gap-3 justify-start animate-fadeIn">
-                  <div className="flex-shrink-0 w-9 h-9 bg-cyan-500/20 border border-cyan-400/50 rounded-full flex items-center justify-center">
-                    <Bot size={18} className="text-cyan-300" />
+                  <div className="flex-shrink-0 w-9 h-9 bg-cyan-500/10 dark:bg-cyan-500/20 border border-cyan-400/50 rounded-full flex items-center justify-center">
+                    <Bot
+                      size={18}
+                      className="text-cyan-600 dark:text-cyan-300"
+                    />
                   </div>
-                  <div className="px-5 py-3 rounded-xl bg-cyan-500/20 text-cyan-100 text-left">
+                  <div className="px-5 py-3 rounded-xl bg-cyan-50 dark:bg-cyan-500/20 text-slate-800 dark:text-cyan-100 text-left">
                     <div className="flex items-center gap-2">
                       <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-cyan-300 rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-cyan-400 dark:bg-cyan-300 rounded-full animate-bounce"></div>
                         <div
-                          className="w-2 h-2 bg-cyan-300 rounded-full animate-bounce"
+                          className="w-2 h-2 bg-cyan-400 dark:bg-cyan-300 rounded-full animate-bounce"
                           style={{ animationDelay: "0.1s" }}
                         ></div>
                         <div
-                          className="w-2 h-2 bg-cyan-300 rounded-full animate-bounce"
+                          className="w-2 h-2 bg-cyan-400 dark:bg-cyan-300 rounded-full animate-bounce"
                           style={{ animationDelay: "0.2s" }}
                         ></div>
                       </div>
@@ -231,7 +240,7 @@ const ContactSection = React.memo(function ContactSection() {
                 value={question}
                 onChange={(e) => setQuestion(e.target.value)}
                 placeholder="Tanyakan sesuatu tentang saya..."
-                className="w-full px-5 py-3 rounded-lg bg-slate-700/50 border border-slate-600/30 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 text-lg"
+                className="w-full px-5 py-3 rounded-lg bg-white dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600/30 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-cyan-400/50 text-lg"
                 onKeyDown={(e) => e.key === "Enter" && handleSend()}
               />
               <Button

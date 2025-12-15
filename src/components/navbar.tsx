@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 const Navbar = () => {
   const [activeSection, setActiveSection] = useState("home");
@@ -11,8 +12,11 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       const sections = ["home", "about", "skills", "projects", "contact"];
       const scrollPosition = window.scrollY;
@@ -58,16 +62,16 @@ const Navbar = () => {
     >
       <nav className="max-w-6xl mx-auto px-6 mt-2 md:mt-4">
         <div
-          className={`flex items-center justify-between rounded-xl px-6 py-3 transition-all duration-300 border border-slate-600/30 ${
+          className={`flex items-center justify-between rounded-xl px-6 py-3 transition-all duration-300 border border-slate-200/50 dark:border-slate-700/50 ${
             scrolled
-              ? "bg-slate-900/80 backdrop-blur-lg"
-              : "bg-slate-800/50 backdrop-blur-md"
+              ? "bg-white/70 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm dark:shadow-none"
+              : "bg-white/30 dark:bg-slate-800/50 backdrop-blur-md"
           }`}
         >
           {/* Logo */}
           <Link
             href="#home"
-            className="text-xl font-bold text-white tracking-wide"
+            className="text-xl font-bold text-slate-900 dark:text-white tracking-wide"
           >
             tyodev
           </Link>
@@ -80,8 +84,8 @@ const Navbar = () => {
                   href={`#${item.toLowerCase()}`}
                   className={`text-sm font-medium transition-all duration-300 ${
                     activeSection === item.toLowerCase()
-                      ? "text-white"
-                      : "text-white/60 hover:text-white"
+                      ? "text-slate-900 dark:text-white"
+                      : "text-slate-600 hover:text-slate-900 dark:text-white/60 dark:hover:text-white"
                   }`}
                 >
                   {item}
@@ -92,13 +96,27 @@ const Navbar = () => {
               </li>
             ))}
             <li>
+              {mounted && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                  className="text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 dark:text-white/80 dark:hover:text-white dark:hover:bg-slate-700/50 rounded-full w-9 h-9"
+                >
+                  <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  <span className="sr-only">Toggle theme</span>
+                </Button>
+              )}
+            </li>
+            <li>
               <Button
                 asChild
                 variant="ghost"
                 className={`relative overflow-hidden transition-all duration-300 rounded-lg ${
                   activeSection === "contact"
                     ? "bg-gradient-to-r from-cyan-500/80 to-indigo-500/80 text-white"
-                    : "text-white/80 hover:text-white hover:bg-slate-700/50"
+                    : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 dark:text-white/80 dark:hover:text-white dark:hover:bg-slate-700/50"
                 }`}
               >
                 <Link href="#contact">
@@ -111,7 +129,7 @@ const Navbar = () => {
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden text-white p-2 rounded-md hover:bg-slate-700/50 transition"
+            className="md:hidden text-slate-900 dark:text-white p-2 rounded-md hover:bg-slate-200/50 dark:hover:bg-slate-700/50 transition"
             onClick={() => setMenuOpen(!menuOpen)}
           >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -120,7 +138,7 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <div className="md:hidden mt-3 rounded-xl bg-slate-900/80 backdrop-blur-lg border border-slate-600/30 p-4 animate-fadeIn">
+          <div className="md:hidden mt-3 rounded-xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-lg border border-slate-200/30 dark:border-slate-600/30 p-4 animate-fadeIn shadow-lg dark:shadow-none">
             <ul className="flex flex-col gap-4">
               {navItems.map((item) => (
                 <li key={item}>
@@ -128,8 +146,8 @@ const Navbar = () => {
                     href={`#${item.toLowerCase()}`}
                     className={`block text-sm font-medium transition-all duration-300 ${
                       activeSection === item.toLowerCase()
-                        ? "text-white"
-                        : "text-white/70 hover:text-white"
+                        ? "text-slate-900 dark:text-white"
+                        : "text-slate-600 hover:text-slate-900 dark:text-white/70 dark:hover:text-white"
                     }`}
                     onClick={() => setMenuOpen(false)}
                   >
@@ -137,6 +155,21 @@ const Navbar = () => {
                   </Link>
                 </li>
               ))}
+              <li className="flex items-center justify-between">
+                <span className="text-sm font-medium text-slate-600 dark:text-white/70">Theme</span>
+                {mounted && (
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                    className="text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 dark:text-white/80 dark:hover:text-white dark:hover:bg-slate-700/50 rounded-full w-9 h-9"
+                  >
+                    <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                    <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                    <span className="sr-only">Toggle theme</span>
+                  </Button>
+                )}
+              </li>
               <li>
                 <Button
                   asChild

@@ -48,11 +48,11 @@ const SkillsSection = React.memo(function SkillsSection() {
   return (
     <section
       id="skills"
-      className="py-20 bg-slate-800 relative overflow-hidden"
+      className="py-20 bg-slate-50 dark:bg-slate-800 relative overflow-hidden"
     >
       {/* Background Pattern - Softer */}
       <div className="absolute inset-0 opacity-3">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-[length:50px_50px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.15)_1px,transparent_0)] dark:bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-[length:50px_50px]" />
       </div>
 
       {/* Background Blobs - Consistent with other sections */}
@@ -64,16 +64,16 @@ const SkillsSection = React.memo(function SkillsSection() {
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-2 bg-cyan-500/20 rounded-full border border-cyan-500/30 mb-6">
-            <span className="text-cyan-300 text-sm font-medium">My Skills</span>
+          <div className="inline-block px-4 py-2 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-full border border-cyan-500/30 mb-6">
+            <span className="text-cyan-600 dark:text-cyan-300 text-sm font-medium">My Skills</span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
             Technologies I{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-teal-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-cyan-500 via-indigo-500 to-teal-500 dark:from-cyan-400 dark:via-indigo-400 dark:to-teal-400 bg-clip-text text-transparent">
               Master
             </span>
           </h2>
-          <p className="text-xl text-white/70 max-w-2xl mx-auto">
+          <p className="text-xl text-slate-600 dark:text-white/70 max-w-2xl mx-auto">
             Berikut adalah teknologi dan tools yang saya kuasai untuk membangun
             aplikasi modern
           </p>
@@ -81,7 +81,7 @@ const SkillsSection = React.memo(function SkillsSection() {
 
         {/* Category Tabs */}
         <div className="flex justify-center mb-12">
-          <div className="bg-slate-700/50 backdrop-blur-sm rounded-xl p-2 border border-slate-600/30">
+          <div className="bg-white/50 dark:bg-slate-700/50 backdrop-blur-sm rounded-xl p-2 border border-slate-200/50 dark:border-slate-600/30 shadow-sm dark:shadow-none">
             {Object.entries(skillCategories).map(([key, category]) => (
               <button
                 key={key}
@@ -89,7 +89,7 @@ const SkillsSection = React.memo(function SkillsSection() {
                 className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
                   activeCategory === key
                     ? "bg-gradient-to-r from-cyan-600/80 to-indigo-600/80 text-white"
-                    : "text-white/70 hover:text-white hover:bg-slate-600/50"
+                    : "text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white hover:bg-slate-200/50 dark:hover:bg-slate-600/50"
                 }`}
               >
                 {category.title}
@@ -105,18 +105,18 @@ const SkillsSection = React.memo(function SkillsSection() {
           ].skills.map((skill, index) => (
             <div
               key={skill.name}
-              className="bg-slate-700/30 backdrop-blur-sm rounded-xl p-6 border border-slate-600/30 hover:bg-slate-700/50 transition-all duration-300 group"
+              className="bg-white/50 dark:bg-slate-700/30 backdrop-blur-sm rounded-xl p-6 border border-slate-200/50 dark:border-slate-600/30 hover:bg-white/80 dark:hover:bg-slate-700/50 transition-all duration-300 group shadow-sm dark:shadow-none"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-white">
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
                   {skill.name}
                 </h3>
-                <span className="text-white/60 text-sm">{skill.level}%</span>
+                <span className="text-slate-500 dark:text-white/60 text-sm">{skill.level}%</span>
               </div>
 
               {/* Progress Bar */}
-              <div className="relative h-3 bg-slate-600/50 rounded-full overflow-hidden">
+              <div className="relative h-3 bg-slate-200 dark:bg-slate-600/50 rounded-full overflow-hidden">
                 <div
                   className={`absolute top-0 left-0 h-full bg-gradient-to-r ${skill.color} rounded-full transition-all duration-1000 ease-out`}
                   style={{
@@ -126,7 +126,7 @@ const SkillsSection = React.memo(function SkillsSection() {
               </div>
 
               {/* Skill Level Indicator */}
-              <div className="flex justify-between text-xs text-white/40 mt-2">
+              <div className="flex justify-between text-xs text-slate-400 dark:text-white/40 mt-2">
                 <span>Beginner</span>
                 <span>Expert</span>
               </div>
@@ -136,11 +136,11 @@ const SkillsSection = React.memo(function SkillsSection() {
 
         {/* Bottom CTA */}
         <div className="text-center mt-16">
-          <div className="bg-slate-700/30 backdrop-blur-sm rounded-xl p-8 border border-slate-600/30 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-white mb-4">
+          <div className="bg-white/50 dark:bg-slate-700/30 backdrop-blur-sm rounded-xl p-8 border border-slate-200/50 dark:border-slate-600/30 max-w-2xl mx-auto shadow-sm dark:shadow-none">
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">
               Tertarik untuk berkolaborasi?
             </h3>
-            <p className="text-white/70 mb-6">
+            <p className="text-slate-600 dark:text-white/70 mb-6">
               Mari diskusikan project Anda dan bagaimana saya bisa membantu
               mewujudkannya
             </p>

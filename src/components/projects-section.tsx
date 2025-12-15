@@ -107,7 +107,7 @@ const ProjectsSection = React.memo(function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="py-20 bg-gradient-to-b from-slate-800 to-slate-900 relative overflow-hidden"
+      className="py-20 bg-gradient-to-b from-slate-50 to-white dark:from-slate-800 dark:to-slate-900 relative overflow-hidden"
     >
       {/* Background Elements */}
       <div className="absolute inset-0">
@@ -118,16 +118,18 @@ const ProjectsSection = React.memo(function ProjectsSection() {
       <div className="container mx-auto px-6 max-w-6xl relative z-10">
         {/* Header */}
         <div className="text-center mb-16">
-          <div className="inline-block px-4 py-2 bg-cyan-500/20 rounded-full border border-cyan-500/30 mb-6">
-            <span className="text-cyan-300 text-sm font-medium">My Work</span>
+          <div className="inline-block px-4 py-2 bg-cyan-500/10 dark:bg-cyan-500/20 rounded-full border border-cyan-500/30 mb-6">
+            <span className="text-cyan-600 dark:text-cyan-300 text-sm font-medium">
+              My Work
+            </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white mb-6">
             Featured{" "}
-            <span className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-teal-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-cyan-500 via-indigo-500 to-teal-500 dark:from-cyan-400 dark:via-indigo-400 dark:to-teal-400 bg-clip-text text-transparent">
               Projects
             </span>
           </h2>
-          <p className="text-xl text-white/70 max-w-2xl mx-auto">
+          <p className="text-xl text-slate-600 dark:text-white/70 max-w-2xl mx-auto">
             Berikut adalah beberapa project terbaik yang telah saya kerjakan
             dengan passion dan dedikasi tinggi
           </p>
@@ -142,7 +144,7 @@ const ProjectsSection = React.memo(function ProjectsSection() {
               className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
                 activeFilter === filter.key
                   ? "bg-gradient-to-r from-cyan-600/80 to-indigo-600/80 text-white"
-                  : "bg-slate-700/30 text-white/70 hover:text-white hover:bg-slate-700/50 border border-slate-600/30"
+                  : "bg-white/50 dark:bg-slate-700/30 text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white hover:bg-white/80 dark:hover:bg-slate-700/50 border border-slate-200/50 dark:border-slate-600/30"
               }`}
             >
               {filter.label}
@@ -155,7 +157,7 @@ const ProjectsSection = React.memo(function ProjectsSection() {
           {filteredProjects.map((project, index) => (
             <div
               key={project.id}
-              className="group bg-slate-700/30 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-600/30 hover:bg-slate-700/50 transition-all duration-500"
+              className="group bg-white/50 dark:bg-slate-700/30 backdrop-blur-sm rounded-xl overflow-hidden border border-slate-200/50 dark:border-slate-600/30 hover:bg-white/80 dark:hover:bg-slate-700/50 transition-all duration-500 shadow-sm dark:shadow-none"
               style={{ animationDelay: `${index * 100}ms` }}
             >
               {/* Project Image */}
@@ -173,15 +175,15 @@ const ProjectsSection = React.memo(function ProjectsSection() {
                 <div className="absolute top-4 right-4 flex gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-2 group-hover:translate-y-0">
                   <Button
                     size="icon"
-                    className="bg-slate-800/70 backdrop-blur-sm hover:bg-slate-700/70 border-0"
+                    className="bg-white/80 dark:bg-slate-800/70 backdrop-blur-sm hover:bg-white dark:hover:bg-slate-700/70 border-0 text-slate-900 dark:text-white"
                   >
-                    <ExternalLink className="h-4 w-4 text-white" />
+                    <ExternalLink className="h-4 w-4" />
                   </Button>
                   <Button
                     size="icon"
-                    className="bg-slate-800/70 backdrop-blur-sm hover:bg-slate-700/70 border-0"
+                    className="bg-white/80 dark:bg-slate-800/70 backdrop-blur-sm hover:bg-white dark:hover:bg-slate-700/70 border-0 text-slate-900 dark:text-white"
                   >
-                    <Github className="h-4 w-4 text-white" />
+                    <Github className="h-4 w-4" />
                   </Button>
                 </div>
 
@@ -195,10 +197,10 @@ const ProjectsSection = React.memo(function ProjectsSection() {
 
               {/* Project Content */}
               <div className="p-6">
-                <h3 className="text-xl font-bold text-white mb-3 group-hover:text-purple-300 transition-colors">
+                <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-300 transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-white/70 text-sm leading-relaxed mb-4">
+                <p className="text-slate-600 dark:text-white/70 text-sm leading-relaxed mb-4">
                   {project.description}
                 </p>
 
@@ -207,7 +209,7 @@ const ProjectsSection = React.memo(function ProjectsSection() {
                   {project.technologies.map((tech, techIndex) => (
                     <span
                       key={techIndex}
-                      className="px-3 py-1 bg-slate-600/50 text-white/80 text-xs rounded-full border border-slate-500/30"
+                      className="px-3 py-1 bg-slate-100 dark:bg-slate-600/50 text-slate-700 dark:text-white/80 text-xs rounded-full border border-slate-200 dark:border-slate-500/30"
                     >
                       {tech}
                     </span>
@@ -215,7 +217,7 @@ const ProjectsSection = React.memo(function ProjectsSection() {
                 </div>
 
                 {/* View Project Button */}
-                <Button className="w-full bg-gradient-to-r from-cyan-600/30 to-indigo-600/30 hover:from-cyan-600/80 hover:to-indigo-600/80 text-white border border-cyan-500/30 hover:border-transparent transition-all duration-300 group/btn">
+                <Button className="w-full bg-gradient-to-r from-cyan-600/10 to-indigo-600/10 dark:from-cyan-600/30 dark:to-indigo-600/30 hover:from-cyan-600/80 hover:to-indigo-600/80 text-slate-900 dark:text-white hover:text-white border border-cyan-500/30 hover:border-transparent transition-all duration-300 group/btn">
                   View Project
                   <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                 </Button>

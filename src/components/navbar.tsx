@@ -100,7 +100,9 @@ const Navbar = () => {
                 <Button
                   variant="ghost"
                   size="icon"
-                  onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                  onClick={() =>
+                    setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                  }
                   className="text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 dark:text-white/80 dark:hover:text-white dark:hover:bg-slate-700/50 rounded-full w-9 h-9"
                 >
                   <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
@@ -156,12 +158,16 @@ const Navbar = () => {
                 </li>
               ))}
               <li className="flex items-center justify-between">
-                <span className="text-sm font-medium text-slate-600 dark:text-white/70">Theme</span>
+                <span className="text-sm font-medium text-slate-600 dark:text-white/70">
+                  Theme
+                </span>
                 {mounted && (
                   <Button
                     variant="ghost"
                     size="icon"
-                    onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+                    onClick={() =>
+                      setTheme(resolvedTheme === "dark" ? "light" : "dark")
+                    }
                     className="text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 dark:text-white/80 dark:hover:text-white dark:hover:bg-slate-700/50 rounded-full w-9 h-9"
                   >
                     <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

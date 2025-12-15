@@ -9,40 +9,48 @@ export default function HeroSection() {
   useEffect(() => {
     setMounted(true);
   }, []);
-  if (!mounted) return <div className="min-h-screen bg-slate-900" />;
+  if (!mounted)
+    return <div className="min-h-screen bg-slate-50 dark:bg-slate-900" />;
   return (
     <section
       id="home"
-      className="relative min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900"
+      className="relative min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-slate-100 dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900"
     >
-      <div className="container mx-auto px-6 py-16 max-w-6xl md:pt-32">
-        <div className="bg-slate-800/50 rounded-xl border border-slate-700/30 overflow-hidden backdrop-blur-sm">
+      <div className="relative z-10 container mx-auto px-6 py-16 max-w-6xl md:pt-32">
+        <div className="bg-white/50 dark:bg-slate-800/50 rounded-xl border border-slate-200/50 dark:border-slate-700/30 overflow-hidden backdrop-blur-sm shadow-lg dark:shadow-none">
           <div className="grid md:grid-cols-2 gap-0">
             {/* Left Section - Content */}
             <div className="p-8 md:p-12 flex flex-col justify-center">
               <div className="space-y-6">
                 <div className="space-y-3">
-                  <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight">
+                  <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white leading-tight">
                     Hi, I&apos;m{" "}
-                    <span className="text-cyan-400">Catur Setyono</span>
+                    <span className="text-cyan-600 dark:text-cyan-400">
+                      Catur Setyono
+                    </span>
                   </h1>
-                  <p className="text-lg text-slate-300 font-medium">
+                  <p className="text-lg text-slate-600 dark:text-slate-300 font-medium">
                     Web Developer | Frontend Specialist
                   </p>
                 </div>
-                <p className="text-slate-300 leading-relaxed">
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
                   I build fast, responsive, and visually engaging websites using{" "}
-                  <span className="text-cyan-400">modern technologies</span> and{" "}
-                  <span className="text-cyan-400">good code</span> to deliver
-                  high-quality user experiences.
+                  <span className="text-cyan-600 dark:text-cyan-400">
+                    modern technologies
+                  </span>{" "}
+                  and{" "}
+                  <span className="text-cyan-600 dark:text-cyan-400">
+                    good code
+                  </span>{" "}
+                  to deliver high-quality user experiences.
                 </p>
                 <div className="flex gap-3 pt-2">
-                  <Button className="bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-600 hover:to-indigo-600 text-white border-0">
+                  <Button className="bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-600 hover:to-indigo-600 text-white border-0 shadow-md dark:shadow-none">
                     View Portfolio <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
                   <Button
                     variant="outline"
-                    className="border-slate-600 text-slate-300 hover:bg-slate-700 bg-transparent"
+                    className="border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 bg-transparent"
                   >
                     <Download className="mr-2 h-4 w-4" /> Download CV
                   </Button>

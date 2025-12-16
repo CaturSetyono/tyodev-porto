@@ -1,14 +1,67 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { GentleBackground } from "@/components/ui/gentle-background";
+import gsap from "gsap";
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current || !cardRef.current) return;
+
+    const { left, top, width, height } =
+      containerRef.current.getBoundingClientRect();
+    const x = (e.clientX - left - width / 2) / 20;
+    const y = (e.clientY - top - height / 2) / 20;
+
+    gsap.to(cardRef.current, {
+      rotateY: x,
+      rotateX: -y,
+      transformPerspective: 1000,
+      duration: 0.5,
+      ease: "power2.out",
+    });
+
+    // Parallax effect for inner content
+    if (contentRef.current) {
+      gsap.to(contentRef.current, {
+        x: x * 1.5,
+        y: y * 1.5,
+        duration: 0.5,
+        ease: "power2.out",
+      });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    if (!cardRef.current) return;
+
+    gsap.to(cardRef.current, {
+      rotateY: 0,
+      rotateX: 0,
+      duration: 0.5,
+      ease: "power2.out",
+    });
+
+    if (contentRef.current) {
+      gsap.to(contentRef.current, {
+        x: 0,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out",
+      });
+    }
+  };
+
   if (!mounted)
     return <div className="min-h-screen bg-slate-50 dark:bg-slate-900" />;
   return (
@@ -82,18 +135,48 @@ export default function HeroSection() {
             </div>
 
             {/* Right Section - Profile Image */}
-            <div className="bg-transparent p-8 md:p-12 flex flex-col justify-center items-center">
-              <div className="relative w-64 h-64 mx-auto">
+            <div
+              ref={containerRef}
+              className="bg-transparent p-8 md:p-12 flex flex-col justify-center items-center perspective-1000"
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+            >
+              <div
+                ref={cardRef}
+                className="relative w-64 h-64 mx-auto"
+                style={{ transformStyle: "preserve-3d" }}
+              >
                 {/* Placeholder for profile image with modern design */}
-                <div className="w-full h-full bg-gradient-to-br from-cyan-400/20 to-indigo-500/20 rounded-2xl flex items-center justify-center border border-slate-600/30 backdrop-blur-sm">
+                <div className="w-full h-full bg-gradient-to-br from-cyan-400/20 to-indigo-500/20 rounded-2xl flex items-center justify-center border border-slate-600/30 backdrop-blur-sm shadow-2xl">
                   {/* Professional icon or initials */}
-                  <div className="text-6xl font-bold text-cyan-400/80">CS</div>
+                  <div
+                    ref={contentRef}
+                    className="text-6xl font-bold text-cyan-400/80"
+                  >
+                    CS
+                  </div>
                 </div>
                 {/* Subtle decorative elements */}
-                <div className="absolute -top-2 -right-2 w-4 h-4 bg-cyan-400/50 rounded-full animate-pulse" />
+                <div
+                  className="absolute -top-2 -right-2 w-4 h-4 bg-cyan-400/50 rounded-full animate-pulse"
+                  style={{ transform: "translateZ(20px)" }}
+                />
                 <div
                   className="absolute -bottom-2 -left-2 w-3 h-3 bg-indigo-400/50 rounded-full animate-pulse"
-                  style={{ animationDelay: "1s" }}
+                  style={{
+                    animationDelay: "1s",
+                    transform: "translateZ(20px)",
+                  }}
+                />
+
+                {/* Floating elements for more 3D feel */}
+                <div
+                  className="absolute -z-10 -top-6 -right-6 w-12 h-12 bg-cyan-400/30 rounded-full blur-xl"
+                  style={{ transform: "translateZ(-20px)" }}
+                />
+                <div
+                  className="absolute -z-10 -bottom-6 -left-6 w-16 h-16 bg-indigo-400/30 rounded-full blur-xl"
+                  style={{ transform: "translateZ(-20px)" }}
                 />
               </div>
             </div>

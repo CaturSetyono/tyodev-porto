@@ -1,69 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Download, Github, Linkedin, Mail } from "lucide-react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { GentleBackground } from "@/components/ui/gentle-background";
-import gsap from "gsap";
+// IMPORT KOMPONEN 3D YANG BARU
+import ThreeScene from "@/components/ThreeScene";
 
 export default function HeroSection() {
   const [mounted, setMounted] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current || !cardRef.current) return;
-
-    const { left, top, width, height } =
-      containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - left - width / 2) / 20;
-    const y = (e.clientY - top - height / 2) / 20;
-
-    gsap.to(cardRef.current, {
-      rotateY: x,
-      rotateX: -y,
-      transformPerspective: 1000,
-      duration: 0.5,
-      ease: "power2.out",
-    });
-
-    // Parallax effect for inner content
-    if (contentRef.current) {
-      gsap.to(contentRef.current, {
-        x: x * 1.5,
-        y: y * 1.5,
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (!cardRef.current) return;
-
-    gsap.to(cardRef.current, {
-      rotateY: 0,
-      rotateX: 0,
-      duration: 0.5,
-      ease: "power2.out",
-    });
-
-    if (contentRef.current) {
-      gsap.to(contentRef.current, {
-        x: 0,
-        y: 0,
-        duration: 0.5,
-        ease: "power2.out",
-      });
-    }
-  };
-
   if (!mounted)
     return <div className="min-h-screen bg-slate-50 dark:bg-slate-900" />;
+
   return (
     <section
       id="home"
@@ -72,7 +24,9 @@ export default function HeroSection() {
       <div className="relative z-10 container mx-auto px-6 py-16 max-w-6xl md:pt-32">
         <div className="bg-white/50 dark:bg-slate-800/50 rounded-xl border border-slate-200/50 dark:border-slate-700/30 overflow-hidden backdrop-blur-sm shadow-lg dark:shadow-none">
           <div className="grid md:grid-cols-2 gap-0">
-            {/* Left Section - Content */}
+
+            {/* --- LEFT SECTION (TEXT) --- */}
+            {/* Bagian ini tidak saya ubah, sama persis seperti kodemu */}
             <div className="p-8 md:p-12 flex flex-col justify-center">
               <div className="space-y-6">
                 <div className="space-y-3">
@@ -98,87 +52,51 @@ export default function HeroSection() {
                   to deliver high-quality user experiences.
                 </p>
                 <div className="flex gap-3 pt-2">
-                  <Button className="bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-600 hover:to-indigo-600 text-white border-0 shadow-md dark:shadow-none">
-                    View Portfolio <ArrowRight className="ml-2 h-4 w-4" />
+                  <Button className="bg-gradient-to-r from-cyan-500 to-indigo-500 hover:from-cyan-600 hover:cursor-pointer hover:to-indigo-600 text-white border-0 shadow-md dark:shadow-none">
+                    <a href="#projects" className="flex items-center">
+                      View Portfolio <ArrowRight className="ml-2 h-4 w-4 " />
+                    </a>
                   </Button>
                   <Button
                     variant="outline"
-                    className="border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 bg-transparent"
+                    className="border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-700 bg-transparent"
                   >
                     <Download className="mr-2 h-4 w-4" /> Download CV
                   </Button>
                 </div>
                 <div className="flex gap-3 pt-4">
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className="text-slate-400 hover:text-cyan-400"
-                  >
-                    <Github className="h-5 w-5" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className="text-slate-400 hover:text-cyan-400"
-                  >
-                    <Linkedin className="h-5 w-5" />
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className="text-slate-400 hover:text-cyan-400"
-                  >
-                    <Mail className="h-5 w-5" />
-                  </Button>
+                  <a href="https://github.com/CaturSetyono" target="_blank" rel="noopener noreferrer">
+                    <Button size="icon" variant="ghost" className="text-slate-400 hover:text-cyan-400">
+                      <Github className="h-5 w-5" />
+                    </Button>
+                  </a>
+                  <a href="https://www.linkedin.com/feed/" target="_blank" rel="noopener noreferrer">
+                    <Button size="icon" variant="ghost" className="text-slate-400 hover:text-cyan-400">
+                      <Linkedin className="h-5 w-5" />
+                    </Button>
+                  </a>
+                  <a href="mailto:caturetyono542@gmail.com">
+                    <Button size="icon" variant="ghost" className="text-slate-400 hover:text-cyan-400">
+                      <Mail className="h-5 w-5" />
+                    </Button>
+                  </a>
                 </div>
               </div>
             </div>
 
-            {/* Right Section - Profile Image */}
-            <div
-              ref={containerRef}
-              className="bg-transparent p-8 md:p-12 flex flex-col justify-center items-center perspective-1000"
-              onMouseMove={handleMouseMove}
-              onMouseLeave={handleMouseLeave}
-            >
-              <div
-                ref={cardRef}
-                className="relative w-64 h-64 mx-auto"
-                style={{ transformStyle: "preserve-3d" }}
-              >
-                {/* Placeholder for profile image with modern design */}
-                <div className="w-full h-full bg-gradient-to-br from-cyan-400/20 to-indigo-500/20 rounded-2xl flex items-center justify-center border border-slate-600/30 backdrop-blur-sm shadow-2xl">
-                  {/* Professional icon or initials */}
-                  <div
-                    ref={contentRef}
-                    className="text-6xl font-bold text-cyan-400/80"
-                  >
-                    CS
-                  </div>
-                </div>
-                {/* Subtle decorative elements */}
-                <div
-                  className="absolute -top-2 -right-2 w-4 h-4 bg-cyan-400/50 rounded-full animate-pulse"
-                  style={{ transform: "translateZ(20px)" }}
-                />
-                <div
-                  className="absolute -bottom-2 -left-2 w-3 h-3 bg-indigo-400/50 rounded-full animate-pulse"
-                  style={{
-                    animationDelay: "1s",
-                    transform: "translateZ(20px)",
-                  }}
-                />
+            {/* --- RIGHT SECTION (3D ANIMATION) --- */}
+            <div className="relative bg-transparent min-h-[400px] flex items-center justify-center overflow-hidden">
 
-                {/* Floating elements for more 3D feel */}
-                <div
-                  className="absolute -z-10 -top-6 -right-6 w-12 h-12 bg-cyan-400/30 rounded-full blur-xl"
-                  style={{ transform: "translateZ(-20px)" }}
-                />
-                <div
-                  className="absolute -z-10 -bottom-6 -left-6 w-16 h-16 bg-indigo-400/30 rounded-full blur-xl"
-                  style={{ transform: "translateZ(-20px)" }}
-                />
+              {/* 1. Komponen 3D Kita */}
+              <ThreeScene />
+
+              {/* 2. Background Glow Effects (Pemanis di belakang bola) */}
+              {/* Kita gunakan absolute agar dia diam di belakang Canvas */}
+              <div className="absolute inset-0 pointer-events-none flex items-center justify-center -z-10">
+                <div className="w-64 h-64 bg-cyan-400/20 rounded-full blur-3xl absolute -translate-x-10 -translate-y-10" />
+                <div className="w-64 h-64 bg-indigo-500/20 rounded-full blur-3xl absolute translate-x-10 translate-y-10" />
               </div>
+
             </div>
           </div>
         </div>

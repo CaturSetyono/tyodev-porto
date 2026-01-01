@@ -7,9 +7,10 @@ import {
   PerspectiveCamera,
   OrbitControls,
   ContactShadows,
+  PerformanceMonitor,
 } from "@react-three/drei";
 import * as THREE from "three";
-import { useRef, useState, useMemo, forwardRef } from "react";
+import { useRef, useState, useMemo, forwardRef, useEffect } from "react";
 
 // --- KONFIGURASI WARNA RUBIK (Harmonious Glossy Palette) ---
 const CUBE_COLORS = [
@@ -24,27 +25,16 @@ const CUBE_COLORS = [
 // --- KOMPONEN SATUAN BLOK (CUBELET) ---
 import type { Mesh } from "three";
 import type { ThreeElements } from '@react-three/fiber';
-interface CubeletProps extends Omit<ThreeElements['mesh'], "position"> {
+
+interface CubeletProps extends Omit<ThreeElements['mesh'], "position" | "material"> {
   position: [number, number, number] | THREE.Vector3;
+  materials: THREE.Material[];
 }
-const Cubelet = forwardRef<Mesh, CubeletProps>(({ position, ...props }, ref) => {
+
+const Cubelet = forwardRef<Mesh, CubeletProps>(({ position, materials, ...props }, ref) => {
   return (
-    <mesh ref={ref} position={position} {...props}>
+    <mesh ref={ref} position={position} material={materials} {...props}>
       <boxGeometry args={[0.96, 0.96, 0.96]} />
-      {CUBE_COLORS.map((color, i) => (
-        <meshPhysicalMaterial
-          key={i}
-          attach={`material-${i}`}
-          color={color}
-          roughness={0.1}
-          metalness={0.1}
-          clearcoat={1}
-          clearcoatRoughness={0.1}
-          reflectivity={1}
-          emissive={color}
-          emissiveIntensity={0.2}
-        />
-      ))}
     </mesh>
   );
 });
@@ -53,6 +43,18 @@ Cubelet.displayName = "Cubelet";
 // --- LOGIKA RUBIK'S CUBE ---
 function RubiksCube() {
   const cubeRefs = useRef<(THREE.Mesh | null)[]>([]);
+
+  // Optimization: Create materials once and reuse them
+  const materials = useMemo(() => {
+    return CUBE_COLORS.map((color) =>
+      new THREE.MeshStandardMaterial({
+        color: color,
+        roughness: 0.2, // Slightly smoother for premium feel
+        metalness: 0.1, // Hints of metallic
+        envMapIntensity: 1.5, // Make sure it reflects the environment
+      })
+    );
+  }, []);
 
   // Inisialisasi posisi & vektor ledakan
   const { initialPositions, explosionVectors } = useMemo(() => {
@@ -79,9 +81,7 @@ function RubiksCube() {
   // State Animasi
   const [isAnimating, setIsAnimating] = useState(false);
   const moveQueue = useRef<{ axis: string; slice: number; dir: number }[]>([]);
-  const moveHistory = useRef<{ axis: string; slice: number; dir: number }[]>(
-    []
-  ); // History untuk solving
+  const moveHistory = useRef<{ axis: string; slice: number; dir: number }[]>([]);
   const animationState = useRef({
     currentAngle: 0,
     targetAngle: 0,
@@ -90,11 +90,13 @@ function RubiksCube() {
     speed: 0,
   });
   const lastAutoMove = useRef(0);
-
   const hasScrambled = useRef(false);
 
-  // Fungsi putaran acak
+  // Fungsi putaran acak (sama seperti sebelumnya, namun dioptimalkan sedikit jika perlu)
   const triggerRandomMove = () => {
+    // Limit queue size to prevent memory leaks in long sessions
+    if (moveQueue.current.length > 5) return;
+
     const axes = ["x", "y", "z"];
     const slices = [-1, 0, 1];
     const dirs = [1, -1];
@@ -106,58 +108,43 @@ function RubiksCube() {
     };
 
     moveQueue.current.push(move);
-    moveHistory.current.push(move); // Catat gerakan agar bisa di-reverse
+    moveHistory.current.push(move);
   };
 
   useFrame((state, delta) => {
+    // Cap delta to prevent huge jumps if tab was inactive
+    const dt = Math.min(delta, 0.1);
     const t = state.clock.elapsedTime;
 
     // --- PHASE 1: INTRO (EXPLOSION TO ASSEMBLY) ---
-    // Durasi: 0s - 3s
     if (t < 3) {
-      const progress = Math.min(1, t / 2.5); // Selesai di 2.5s
-      const ease = 1 - Math.pow(1 - progress, 3); // Cubic Out easing
+      const progress = Math.min(1, t / 2.5);
+      const ease = 1 - Math.pow(1 - progress, 3);
 
       cubeRefs.current.forEach((mesh, i) => {
         if (mesh) {
-          // Interpolasi dari posisi ledakan ke posisi grid
           const target = initialPositions[i];
           const explosion = explosionVectors[i];
 
-          mesh.position.x = THREE.MathUtils.lerp(
-            target.x + explosion.x,
-            target.x,
-            ease
-          );
-          mesh.position.y = THREE.MathUtils.lerp(
-            target.y + explosion.y,
-            target.y,
-            ease
-          );
-          mesh.position.z = THREE.MathUtils.lerp(
-            target.z + explosion.z,
-            target.z,
-            ease
-          );
+          // Use direct assignment for performance instead of lerp object creation
+          mesh.position.x = target.x + explosion.x * (1 - ease); // SImplified lerp formula for 0 start
+          mesh.position.y = target.y + explosion.y * (1 - ease);
+          mesh.position.z = target.z + explosion.z * (1 - ease);
 
-          // Rotasi acak saat terbang
           mesh.rotation.x = (1 - ease) * explosion.x;
           mesh.rotation.y = (1 - ease) * explosion.y;
         }
       });
-      return; // Skip logika rubik saat intro
+      return;
     }
 
     // --- PHASE 2 & 3: RUBIK LOGIC ---
 
-    // Trigger Scramble Awal (t > 3)
     if (t > 3 && !hasScrambled.current) {
       hasScrambled.current = true;
       for (let i = 0; i < 5; i++) triggerRandomMove();
     }
 
-    // --- PHASE 3: SOLVING (t > 60s) ---
-    // Saat > 60 detik, kita berhenti mengacak dan mulai menyelesaikan (undo moves)
     if (t > 60) {
       if (
         !isAnimating &&
@@ -168,7 +155,7 @@ function RubiksCube() {
         moveQueue.current.push({
           axis: lastMove.axis,
           slice: lastMove.slice,
-          dir: -lastMove.dir, // Gerakan kebalikan (Inverse)
+          dir: -lastMove.dir,
         });
       }
     }
@@ -178,25 +165,23 @@ function RubiksCube() {
       const move = moveQueue.current.shift()!;
 
       const indices: number[] = [];
+      // Optimization: pre-calculate threshold
+      const threshold = 0.1;
+
       cubeRefs.current.forEach((mesh, i) => {
         if (!mesh) return;
         const pos = mesh.position;
         let match = false;
-        if (move.axis === "x" && Math.abs(pos.x - move.slice) < 0.1)
-          match = true;
-        if (move.axis === "y" && Math.abs(pos.y - move.slice) < 0.1)
-          match = true;
-        if (move.axis === "z" && Math.abs(pos.z - move.slice) < 0.1)
-          match = true;
+        // Direct access is faster
+        if (move.axis === "x" && Math.abs(pos.x - move.slice) < threshold) match = true;
+        else if (move.axis === "y" && Math.abs(pos.y - move.slice) < threshold) match = true;
+        else if (move.axis === "z" && Math.abs(pos.z - move.slice) < threshold) match = true;
+
         if (match) indices.push(i);
       });
 
       if (indices.length > 0) {
-        // Kecepatan putar:
-        // t > 60 (Solving): Speed 3.5 (~0.3s per move) agar terlihat "pelan tapi pasti"
-        // t <= 60 (Scramble): Speed 5 (~0.2s per move) agar terlihat lincah
         const speed = t > 60 ? 3.5 : 5;
-
         animationState.current = {
           currentAngle: 0,
           targetAngle: (Math.PI / 2) * move.dir,
@@ -210,9 +195,8 @@ function RubiksCube() {
 
     // 2. Animate Rotation
     if (isAnimating) {
-      const { axis, targetAngle, activeIndices, speed } =
-        animationState.current;
-      let step = targetAngle * speed * delta;
+      const { axis, targetAngle, activeIndices, speed } = animationState.current;
+      let step = targetAngle * speed * dt;
       const remaining = targetAngle - animationState.current.currentAngle;
 
       if (Math.abs(remaining) < Math.abs(step)) {
@@ -222,6 +206,8 @@ function RubiksCube() {
 
       animationState.current.currentAngle += step;
 
+      // Optimize Matrix creation - reuse would be better but inside component it's tricky without a global temp
+      // Just keep it simple but clean
       const rotationMatrix = new THREE.Matrix4();
       const rotationAxis = new THREE.Vector3(
         axis === "x" ? 1 : 0,
@@ -230,8 +216,8 @@ function RubiksCube() {
       );
 
       if (axis === "x") rotationMatrix.makeRotationX(step);
-      if (axis === "y") rotationMatrix.makeRotationY(step);
-      if (axis === "z") rotationMatrix.makeRotationZ(step);
+      else if (axis === "y") rotationMatrix.makeRotationY(step);
+      else if (axis === "z") rotationMatrix.makeRotationZ(step);
 
       activeIndices.forEach((idx) => {
         const mesh = cubeRefs.current[idx];
@@ -241,7 +227,7 @@ function RubiksCube() {
         }
       });
 
-      if (!isAnimating) {
+      if (!isAnimating) { // Snap to grid at end of move
         activeIndices.forEach((idx) => {
           const mesh = cubeRefs.current[idx];
           if (mesh) {
@@ -253,17 +239,21 @@ function RubiksCube() {
         });
       }
     }
-    // 3. Auto Shuffle (Idle)
+    // 3. Auto Shuffle
     else if (t > 3 && t <= 60) {
-      // Hanya auto-shuffle sampai detik 60
-      // Interval 1.2 detik agar jumlah gerakan tidak terlalu menumpuk (sekitar 45-50 gerakan)
-      // Sehingga saat solving tidak memakan waktu terlalu lama
       if (state.clock.elapsedTime - lastAutoMove.current > 1.2) {
         triggerRandomMove();
         lastAutoMove.current = state.clock.elapsedTime;
       }
     }
   });
+
+  // Clean up materials on unmount
+  useEffect(() => {
+    return () => {
+      materials.forEach(mat => mat.dispose());
+    };
+  }, [materials]);
 
   return (
     <group
@@ -276,6 +266,7 @@ function RubiksCube() {
         <Cubelet
           key={i}
           position={pos}
+          materials={materials}
           ref={(el) => { cubeRefs.current[i] = el; }}
         />
       ))}
@@ -285,17 +276,29 @@ function RubiksCube() {
 
 // --- SCENE UTAMA ---
 export default function ThreeScene() {
+  const [dpr, setDpr] = useState(1); // Default to 1 initially for safety
+
   return (
     <div className="w-full h-[500px] md:h-[600px] flex justify-center items-center relative z-10">
       <Canvas
-        dpr={[1, 2]}
-        gl={{ antialias: true, alpha: true }}
+        dpr={dpr} // Dynamic DPR
+        gl={{
+          antialias: true,
+          alpha: true,
+          powerPreference: "high-performance",
+          failIfMajorPerformanceCaveat: true
+        }}
         style={{ background: "transparent" }}
       >
-        {/* Camera moved further back to make the element appear smaller */}
+        <PerformanceMonitor
+          onIncline={() => setDpr(2)} // Increase quality if performance is good
+          onDecline={() => setDpr(1)} // Decrease quality if performance is bad
+          flipflops={3}
+          onFallback={() => setDpr(1)}
+        />
+
         <PerspectiveCamera makeDefault position={[8, 6, 9]} fov={40} />
 
-        {/* Kontrol Orbit untuk memutar seluruh Rubik */}
         <OrbitControls
           enablePan={false}
           enableZoom={false}
@@ -303,36 +306,28 @@ export default function ThreeScene() {
           autoRotateSpeed={1.5}
           minPolarAngle={Math.PI / 4}
           maxPolarAngle={Math.PI / 1.5}
+          makeDefault
         />
 
-        {/* Pencahayaan */}
         <ambientLight intensity={0.6} />
-        <directionalLight
-          position={[10, 10, 5]}
-          intensity={1.5}
-          color="#ffffff"
-        />
-        <directionalLight
-          position={[-10, -10, -5]}
-          intensity={1}
-          color="#ffffff"
-        />
+        <directionalLight position={[10, 10, 5]} intensity={1.5} color="#ffffff" shadow-mapSize={[1024, 1024]} />
+        <directionalLight position={[-10, -10, -5]} intensity={1} color="#ffffff" />
 
-        <Environment preset="studio" />
+        <Environment preset="studio" blur={1} />
 
-        {/* Reduce Float animation for better performance */}
         <Float speed={1.2} rotationIntensity={0.12} floatIntensity={0.3}>
           <RubiksCube />
         </Float>
-        {/* Lower shadow resolution for performance, keep shadow visible */}
+
         <ContactShadows
           position={[0, -4, 0]}
-          opacity={0.5}
+          opacity={0.4}
           scale={15}
-          blur={2}
+          blur={2.5}
           far={10}
-          resolution={128}
+          resolution={128} // Kept low for performance
           color="#000000"
+          frames={1} // Static shadow (rendered once) for performance. If cube moves vertically significantly, might need more frames.
         />
       </Canvas>
     </div>

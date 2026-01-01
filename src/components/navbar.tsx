@@ -12,7 +12,7 @@ const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [visible, setVisible] = useState(true);
   const [lastScrollY, setLastScrollY] = useState(0);
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -56,17 +56,15 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 transform ${
-        visible ? "translate-y-0" : "-translate-y-full"
-      } ${scrolled ? "py-3" : "py-5"}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 transform ${visible ? "translate-y-0" : "-translate-y-full"
+        } ${scrolled ? "py-3" : "py-5"}`}
     >
       <nav className="max-w-6xl mx-auto px-6 mt-2 md:mt-4">
         <div
-          className={`flex items-center justify-between rounded-xl px-6 py-3 transition-all duration-300 border border-slate-200/50 dark:border-slate-700/50 ${
-            scrolled
+          className={`flex items-center justify-between rounded-xl px-6 py-3 transition-all duration-300 border border-slate-200/50 dark:border-slate-700/50 ${scrolled
               ? "bg-white/70 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm dark:shadow-none"
               : "bg-white/30 dark:bg-slate-800/50 backdrop-blur-md"
-          }`}
+            }`}
         >
           {/* Logo */}
           <Link
@@ -82,11 +80,10 @@ const Navbar = () => {
               <li key={item} className="relative">
                 <Link
                   href={`#${item.toLowerCase()}`}
-                  className={`text-sm font-medium transition-all duration-300 ${
-                    activeSection === item.toLowerCase()
+                  className={`text-sm font-medium transition-all duration-300 ${activeSection === item.toLowerCase()
                       ? "text-slate-900 dark:text-white"
                       : "text-slate-600 hover:text-slate-900 dark:text-white/60 dark:hover:text-white"
-                  }`}
+                    }`}
                 >
                   {item}
                 </Link>
@@ -115,11 +112,10 @@ const Navbar = () => {
               <Button
                 asChild
                 variant="ghost"
-                className={`relative overflow-hidden transition-all duration-300 rounded-lg ${
-                  activeSection === "contact"
+                className={`relative overflow-hidden transition-all duration-300 rounded-lg ${activeSection === "contact"
                     ? "bg-gradient-to-r from-cyan-500/80 to-indigo-500/80 text-white"
                     : "text-slate-600 hover:text-slate-900 hover:bg-slate-200/50 dark:text-white/80 dark:hover:text-white dark:hover:bg-slate-700/50"
-                }`}
+                  }`}
               >
                 <Link href="#contact">
                   Contact
@@ -146,11 +142,10 @@ const Navbar = () => {
                 <li key={item}>
                   <Link
                     href={`#${item.toLowerCase()}`}
-                    className={`block text-sm font-medium transition-all duration-300 ${
-                      activeSection === item.toLowerCase()
+                    className={`block text-sm font-medium transition-all duration-300 ${activeSection === item.toLowerCase()
                         ? "text-slate-900 dark:text-white"
                         : "text-slate-600 hover:text-slate-900 dark:text-white/70 dark:hover:text-white"
-                    }`}
+                      }`}
                     onClick={() => setMenuOpen(false)}
                   >
                     {item}

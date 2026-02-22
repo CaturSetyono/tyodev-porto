@@ -49,7 +49,7 @@ export async function chatWithGemini(messages: ChatMessage[]): Promise<string> {
 
   try {
     const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
-    
+
     // Convert messages ke format yang sesuai dengan Gemini
     const chatHistory = messages.slice(0, -1).map(msg => ({
       role: msg.role === 'assistant' ? 'model' : 'user',
@@ -99,7 +99,7 @@ export async function chatWithOpenAI(messages: ChatMessage[]): Promise<string> {
 }
 
 export async function chatWithAI(
-  messages: ChatMessage[], 
+  messages: ChatMessage[],
   provider: AIProvider = 'gemini'
 ): Promise<string> {
   switch (provider) {

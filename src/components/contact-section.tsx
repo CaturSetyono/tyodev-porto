@@ -149,21 +149,19 @@ const ContactSection = React.memo(function ContactSection() {
               <div className="flex bg-slate-100 dark:bg-slate-700/50 rounded-lg p-1">
                 <button
                   onClick={() => setAiProvider("gemini")}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                    aiProvider === "gemini"
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${aiProvider === "gemini"
                       ? "bg-cyan-500/10 dark:bg-cyan-500/30 text-cyan-600 dark:text-cyan-300 shadow-sm"
                       : "text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white"
-                  }`}
+                    }`}
                 >
                   Gemini AI
                 </button>
                 <button
                   onClick={() => setAiProvider("openai")}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                    aiProvider === "openai"
+                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${aiProvider === "openai"
                       ? "bg-cyan-500/10 dark:bg-cyan-500/30 text-cyan-600 dark:text-cyan-300 shadow-sm"
                       : "text-slate-600 dark:text-white/70 hover:text-slate-900 dark:hover:text-white"
-                  }`}
+                    }`}
                 >
                   OpenAI
                 </button>
@@ -174,9 +172,8 @@ const ContactSection = React.memo(function ContactSection() {
               {messages.map((msg, idx) => (
                 <div
                   key={idx}
-                  className={`flex items-start gap-3 ${
-                    msg.from === "user" ? "justify-end" : "justify-start"
-                  } animate-fadeIn`}
+                  className={`flex items-start gap-3 ${msg.from === "user" ? "justify-end" : "justify-start"
+                    } animate-fadeIn`}
                 >
                   {msg.from === "bot" && (
                     <div className="flex-shrink-0 w-9 h-9 bg-cyan-500/10 dark:bg-cyan-500/20 border border-cyan-400/50 rounded-full flex items-center justify-center">
@@ -187,11 +184,10 @@ const ContactSection = React.memo(function ContactSection() {
                     </div>
                   )}
                   <div
-                    className={`px-5 py-3 rounded-xl max-w-[75%] text-base leading-relaxed ${
-                      msg.from === "bot"
+                    className={`px-5 py-3 rounded-xl max-w-[75%] text-base leading-relaxed ${msg.from === "bot"
                         ? "bg-cyan-50 dark:bg-cyan-500/20 text-slate-800 dark:text-cyan-100 text-left"
                         : "bg-indigo-100 dark:bg-indigo-500/40 text-slate-800 dark:text-white text-right"
-                    }`}
+                      }`}
                   >
                     {msg.text}
                   </div>

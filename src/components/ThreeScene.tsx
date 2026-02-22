@@ -274,6 +274,17 @@ function RubiksCube() {
   );
 }
 
+// --- HELPER UNTUK ROTASI OTOMATIS OBJEK (MENGGANTIKAN ROTASI KAMERA) ---
+function AutoRotate({ children }: { children: React.ReactNode }) {
+  const groupRef = useRef<THREE.Group>(null);
+  useFrame((state, delta) => {
+    if (groupRef.current) {
+      groupRef.current.rotation.y += delta * 0.5; // Kecepatan rotasi
+    }
+  });
+  return <group ref={groupRef}>{children}</group>;
+}
+
 // --- SCENE UTAMA ---
 export default function ThreeScene() {
   const [dpr, setDpr] = useState(1); // Default to 1 initially for safety
@@ -302,8 +313,7 @@ export default function ThreeScene() {
         <OrbitControls
           enablePan={false}
           enableZoom={false}
-          autoRotate
-          autoRotateSpeed={1.5}
+          // autoRotate dihapus agar kamera stay diam, bayangan stay di bawah
           minPolarAngle={Math.PI / 4}
           maxPolarAngle={Math.PI / 1.5}
           makeDefault
@@ -315,9 +325,11 @@ export default function ThreeScene() {
 
         <Environment preset="studio" blur={1} />
 
-        <Float speed={1.2} rotationIntensity={0.12} floatIntensity={0.3}>
-          <RubiksCube />
-        </Float>
+        <AutoRotate>
+          <Float speed={1.2} rotationIntensity={0.12} floatIntensity={0.3}>
+            <RubiksCube />
+          </Float>
+        </AutoRotate>
 
         <ContactShadows
           position={[0, -4, 0]}

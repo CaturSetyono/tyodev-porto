@@ -1,13 +1,14 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Instagram , Twitter } from "lucide-react";
+import { Github, Linkedin, Instagram, Twitter } from "lucide-react";
 import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
 import { GentleBackground } from "@/components/ui/gentle-background";
-// IMPORT KOMPONEN 3D YANG BARU
-import ThreeScene from "@/components/ThreeScene";
-
+// MENGGUNAKAN DYNAMIC IMPORT UNTUK MENGHINDARI SSR ISSUE DI THREE.JS
+const ThreeScene = dynamic(() => import("@/components/ThreeScene"), { ssr: false });
 
 export default function HeroSection() {
+
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -52,7 +53,7 @@ export default function HeroSection() {
                   to deliver high-quality user experiences.
                 </p>
 
-               
+
 
                 <div className="flex items-center gap-4 pt-6 text-slate-400">
                   <span className="text-sm font-medium uppercase tracking-wider text-slate-500 dark:text-slate-500">Connect</span>

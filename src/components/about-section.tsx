@@ -23,6 +23,10 @@ const AboutSection = React.memo(function AboutSection() {
     { title: "Performance", desc: "Performa animasi web tingkat tinggi dengan frame rate maksimal." },
   ];
 
+  // Custom hook for counting numbers safely in React to avoid hydration/DOM mismatch errors
+  const [counts, setCounts] = React.useState([0, 0]);
+  const hasCounted = useRef(false);
+
   useEffect(() => {
     const ctx = gsap.context(() => {
 
@@ -82,24 +86,40 @@ const AboutSection = React.memo(function AboutSection() {
           ease: "power2.out"
         }, "-=1")
 
-      // 7. Number counter animation (Triggered immediately when content grid appears, but not scrubbed)
-      // We use a regular ScrollTrigger for the numbers so they count up naturally over time, rather than scrubbing rigidly
-      const statElements = gsap.utils.toArray<HTMLElement>(".stat-number");
-      statElements.forEach((el) => {
-        const targetValue = parseInt(el.getAttribute("data-target") || "0");
-        gsap.to(el, {
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top -50%", // Start counting when the user is scrolled halfway deeply into the pin
-          },
-          innerHTML: targetValue,
-          duration: 2,
-          snap: { innerHTML: 1 },
-          ease: "power2.out",
-          onUpdate: function () {
-            el.innerText = String(Math.round(Number(this.targets()[0].innerHTML)));
+      // 7. Trigger React State Counter on Scroll
+      ScrollTrigger.create({
+        trigger: sectionRef.current,
+        start: "top -50%",
+        onEnter: () => {
+          if (!hasCounted.current) {
+            hasCounted.current = true;
+
+            // Animate both counters
+            stats.forEach((stat, index) => {
+              let startTimestamp: number | null = null;
+              const duration = 2000; // 2 seconds
+
+              const step = (timestamp: number) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                // easeOutQuart
+                const easeProgress = 1 - Math.pow(1 - progress, 4);
+
+                setCounts(prev => {
+                  const newCounts = [...prev];
+                  newCounts[index] = Math.floor(easeProgress * stat.value);
+                  return newCounts;
+                });
+
+                if (progress < 1) {
+                  window.requestAnimationFrame(step);
+                }
+              };
+
+              window.requestAnimationFrame(step);
+            });
           }
-        });
+        }
       });
 
     }, sectionRef);
@@ -146,10 +166,9 @@ const AboutSection = React.memo(function AboutSection() {
                 <div key={idx} className="">
                   <div className="flex items-baseline gap-1 mb-2">
                     <span
-                      className="stat-number text-5xl font-bold text-slate-900 dark:text-white tracking-tighter"
-                      data-target={stat.value}
+                      className="text-5xl font-bold text-slate-900 dark:text-white tracking-tighter"
                     >
-                      0
+                      {counts[idx]}
                     </span>
                     <span className="text-4xl font-bold text-cyan-600 dark:text-cyan-400">+</span>
                   </div>
